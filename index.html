@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="minimal">
+<html lang="ko" data-theme="minimal" data-lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,37 +9,43 @@
   <link rel="stylesheet" href="themes.css">
 </head>
 <body>
+  <div class="lang-switch" role="group" data-i18n="langAria" data-i18n-attr="aria-label">
+    <button type="button" class="lang-switch__btn lang-switch__btn--active" data-lang="ko" aria-pressed="true">KO</button>
+    <button type="button" class="lang-switch__btn" data-lang="en" aria-pressed="false">EN</button>
+    <button type="button" class="lang-switch__btn" data-lang="zh" aria-pressed="false">中</button>
+  </div>
+
   <main class="app">
-    <h1 class="app-title">계산기</h1>
+    <h1 class="app-title" data-i18n="appTitle">계산기</h1>
     <p id="ent-status" class="ent-status" aria-live="polite" hidden></p>
-    <div class="calculator" role="application" aria-label="계산기">
+    <div class="calculator" role="application" data-i18n="calcAria" data-i18n-attr="aria-label" aria-label="계산기">
       <div class="display" aria-live="polite">
         <span class="display-value" id="display">0</span>
       </div>
       <div class="keys" id="keys">
-        <button type="button" class="key key-fn" data-action="clear" aria-label="전체 지우기">AC</button>
-        <button type="button" class="key key-fn" data-action="sign" aria-label="부호">±</button>
-        <button type="button" class="key key-fn" data-action="percent" aria-label="퍼센트">%</button>
-        <button type="button" class="key key-op" data-action="operator" data-value="/" aria-label="나누기">÷</button>
+        <button type="button" class="key key-fn" data-action="clear" data-i18n="keyAria_clear" data-i18n-attr="aria-label" aria-label="전체 지우기">AC</button>
+        <button type="button" class="key key-fn" data-action="sign" data-i18n="keyAria_sign" data-i18n-attr="aria-label" aria-label="부호">±</button>
+        <button type="button" class="key key-fn" data-action="percent" data-i18n="keyAria_percent" data-i18n-attr="aria-label" aria-label="퍼센트">%</button>
+        <button type="button" class="key key-op" data-action="operator" data-value="/" data-i18n="keyAria_div" data-i18n-attr="aria-label" aria-label="나누기">÷</button>
 
         <button type="button" class="key key-num" data-action="digit" data-value="7">7</button>
         <button type="button" class="key key-num" data-action="digit" data-value="8">8</button>
         <button type="button" class="key key-num" data-action="digit" data-value="9">9</button>
-        <button type="button" class="key key-op" data-action="operator" data-value="*" aria-label="곱하기">×</button>
+        <button type="button" class="key key-op" data-action="operator" data-value="*" data-i18n="keyAria_mul" data-i18n-attr="aria-label" aria-label="곱하기">×</button>
 
         <button type="button" class="key key-num" data-action="digit" data-value="4">4</button>
         <button type="button" class="key key-num" data-action="digit" data-value="5">5</button>
         <button type="button" class="key key-num" data-action="digit" data-value="6">6</button>
-        <button type="button" class="key key-op" data-action="operator" data-value="-" aria-label="빼기">−</button>
+        <button type="button" class="key key-op" data-action="operator" data-value="-" data-i18n="keyAria_sub" data-i18n-attr="aria-label" aria-label="빼기">−</button>
 
         <button type="button" class="key key-num" data-action="digit" data-value="1">1</button>
         <button type="button" class="key key-num" data-action="digit" data-value="2">2</button>
         <button type="button" class="key key-num" data-action="digit" data-value="3">3</button>
-        <button type="button" class="key key-op" data-action="operator" data-value="+" aria-label="더하기">+</button>
+        <button type="button" class="key key-op" data-action="operator" data-value="+" data-i18n="keyAria_add" data-i18n-attr="aria-label" aria-label="더하기">+</button>
 
         <button type="button" class="key key-num key-zero" data-action="digit" data-value="0">0</button>
         <button type="button" class="key key-num" data-action="decimal" data-value=".">.</button>
-        <button type="button" class="key key-eq" data-action="equals" aria-label="계산">=</button>
+        <button type="button" class="key key-eq" data-action="equals" data-i18n="keyAria_equals" data-i18n-attr="aria-label" aria-label="계산">=</button>
       </div>
     </div>
   </main>
@@ -51,27 +57,27 @@
       <div class="checkout-modal__card pricing-modal__card-inner">
         <p class="pricing-modal__hook">
           <span class="pricing-modal__hook-emoji" aria-hidden="true">💸</span>
-          <span class="pricing-modal__hook-text">돈 벌기 1일차</span>
-          <span class="pricing-modal__hook-sub">· 여기만 레인보우 플렉스</span>
+          <span class="pricing-modal__hook-text" data-i18n="pricingHookText">돈 벌기 1일차</span>
+          <span class="pricing-modal__hook-sub" data-i18n="pricingHookSub">· 여기만 레인보우 플렉스</span>
         </p>
-        <h2 id="pricing-title" class="pricing-modal__title">이용권이 필요해요 ✨</h2>
-        <p class="checkout-modal__lead">
+        <h2 id="pricing-title" class="pricing-modal__title" data-i18n="pricingTitle">이용권이 필요해요 ✨</h2>
+        <p class="checkout-modal__lead" data-i18n-html="pricingLeadHtml">
           <strong>=</strong> 로 결과를 볼 때마다 1회가 차감돼요. 월 구독이면 무제한!
         </p>
         <div class="pricing-actions">
           <button type="button" class="checkout-modal__pay checkout-modal__pay--secondary pricing-modal__btn pricing-modal__btn--pack" id="btn-buy-pack">
             <span class="pricing-modal__btn-shine" aria-hidden="true"></span>
-            <span class="pricing-modal__btn-label">10회 이용권 · ₩5,000</span>
+            <span class="pricing-modal__btn-label" data-i18n="pricingPackLabel">10회 이용권 · ₩5,000</span>
           </button>
           <button type="button" class="checkout-modal__pay pricing-modal__btn pricing-modal__btn--sub" id="btn-buy-sub">
             <span class="pricing-modal__btn-shine" aria-hidden="true"></span>
-            <span class="pricing-modal__btn-label">월 무제한 · ₩50,000</span>
+            <span class="pricing-modal__btn-label" data-i18n="pricingSubLabel">월 무제한 · ₩50,000</span>
           </button>
         </div>
-        <p class="checkout-modal__note">
+        <p class="checkout-modal__note" data-i18n-html="pricingNoteHtml">
           결제는 Stripe Checkout으로 진행돼요. Netlify에 <code>STRIPE_SECRET_KEY</code> 넣고 배포하면 돼요.
         </p>
-        <button type="button" class="checkout-modal__close" id="btn-pricing-close">닫기</button>
+        <button type="button" class="checkout-modal__close" id="btn-pricing-close" data-i18n="btnClose">닫기</button>
       </div>
     </div>
   </div>
@@ -86,9 +92,9 @@
       <div class="checkout-modal__card result-modal__card-inner">
         <p class="result-modal__kicker">
           <span class="result-modal__kicker-emoji" aria-hidden="true">🌈</span>
-          <span class="result-modal__kicker-text">결과가 나왔어요</span>
+          <span class="result-modal__kicker-text" data-i18n="resultKicker">결과가 나왔어요</span>
         </p>
-        <h2 id="result-title" class="result-modal__title">결과</h2>
+        <h2 id="result-title" class="result-modal__title" data-i18n="resultTitle">결과</h2>
         <div class="result-modal__value-wrap">
           <span class="result-modal__value-ring" aria-hidden="true"></span>
           <div class="result-modal__value-panel">
@@ -96,35 +102,36 @@
             <span class="result-modal__value-glint" aria-hidden="true"></span>
           </div>
         </div>
-        <button type="button" class="checkout-modal__close result-modal__close" id="btn-result-close">닫기</button>
+        <button type="button" class="checkout-modal__close result-modal__close" id="btn-result-close" data-i18n="btnClose">닫기</button>
       </div>
     </div>
   </div>
 
-  <aside class="theme-dock" aria-label="계산기 테마 선택">
-    <p class="theme-dock__label">테마</p>
+  <aside class="theme-dock" data-i18n="themeDockAria" data-i18n-attr="aria-label" aria-label="계산기 테마 선택">
+    <p class="theme-dock__label" data-i18n="themeDockLabel">테마</p>
     <button type="button" class="theme-chip theme-chip--minimal theme-chip--active" data-theme-id="minimal" aria-pressed="true" title="기본 (배경 없음)">
       <span class="theme-chip__emoji" aria-hidden="true">🧮</span>
-      <span>기본</span>
+      <span data-i18n="themeMinimal">기본</span>
     </button>
     <button type="button" class="theme-chip theme-chip--pink" data-theme-id="pink-cat" aria-pressed="false" title="핑크 냥이">
       <span class="theme-chip__emoji" aria-hidden="true">🎀</span>
-      <span>핑크 냥이</span>
+      <span data-i18n="themePink">핑크 냥이</span>
     </button>
     <button type="button" class="theme-chip theme-chip--space" data-theme-id="space" aria-pressed="false" title="우주">
       <span class="theme-chip__emoji" aria-hidden="true">🌌</span>
-      <span>우주</span>
+      <span data-i18n="themeSpace">우주</span>
     </button>
     <button type="button" class="theme-chip theme-chip--parents" data-theme-id="parents" aria-pressed="false" title="엄마아빠의 사랑">
       <span class="theme-chip__emoji" aria-hidden="true">💝</span>
-      <span>엄빠사랑</span>
+      <span data-i18n="themeParents">엄빠사랑</span>
     </button>
     <button type="button" class="theme-chip theme-chip--jesus" data-theme-id="jesus" aria-pressed="false" title="예수님">
       <span class="theme-chip__emoji" aria-hidden="true">🕊️</span>
-      <span>예수님</span>
+      <span data-i18n="themeJesus">예수님</span>
     </button>
   </aside>
 
+  <script src="i18n.js"></script>
   <script src="stripe-config.js"></script>
   <script src="script.js"></script>
 </body>

@@ -95,13 +95,15 @@
     entStatus.hidden = false;
     if (hasUnlimited()) {
       const d = new Date(getSubUntil());
-      entStatus.textContent =
-        "월 구독 이용 중 · 무제한 (~" +
-        d.toLocaleDateString("ko-KR", { year: "numeric", month: "short", day: "numeric" }) +
-        ")";
+      entStatus.textContent = CalcI18n.t("entUnlimited", {
+        date: d.toLocaleDateString(CalcI18n.localeForDates(), {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        }),
+      });
     } else {
-      const c = getCredits();
-      entStatus.textContent = "남은 횟수: " + c + "회 (= 결과를 볼 때마다 1회 차감)";
+      entStatus.textContent = CalcI18n.t("entCredits", { n: getCredits() });
     }
   }
 
@@ -274,7 +276,7 @@
 
   function startCheckout(priceId, mode) {
     if (!priceId) {
-      alert("stripe-config.js 에 Price ID가 설정돼 있는지 확인해 주세요.");
+      alert(CalcI18n.t("alertNoPriceId"));
       return;
     }
     const url = apiBase + "/.netlify/functions/create-checkout-session";
@@ -297,15 +299,11 @@
           window.location.href = data.url;
           return;
         }
-        var msg =
-          (data && data.error) ||
-          "결제 페이지를 열 수 없습니다. Netlify 배포와 STRIPE_SECRET_KEY 를 확인해 주세요.";
+        var msg = (data && data.error) || CalcI18n.t("alertCheckoutFail");
         alert(msg);
       })
       .catch(function () {
-        alert(
-          "서버에 연결할 수 없습니다. Netlify에 배포했는지, 같은 주소에서 열고 있는지 확인해 주세요."
-        );
+        alert(CalcI18n.t("alertNetwork"));
       })
       .finally(function () {
         btnBuyPack.disabled = false;
@@ -325,6 +323,17 @@
   pricingBackdrop.addEventListener("click", closePricingModal);
   if (btnResultClose) btnResultClose.addEventListener("click", closeResultModal);
   if (resultBackdrop) resultBackdrop.addEventListener("click", closeResultModal);
+
+  var langBar = document.querySelector(".lang-switch");
+  if (langBar) {
+    langBar.addEventListener("click", function (e) {
+      var b = e.target.closest(".lang-switch__btn[data-lang]");
+      if (!b) return;
+      CalcI18n.setLang(b.getAttribute("data-lang"));
+      CalcI18n.apply(document);
+      updateEntitlementStatus();
+    });
+  }
 
   keys.addEventListener("click", function (e) {
     const btn = e.target.closest("button[data-action]");
@@ -422,6 +431,7 @@
     }
   });
 
+  CalcI18n.apply(document);
   updateDisplay();
   updateEntitlementStatus();
 })();

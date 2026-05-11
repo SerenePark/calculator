@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
   <title>결제 완료</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="themes.css">
@@ -18,11 +19,15 @@
 </head>
 <body class="success-page">
   <main class="success-card">
-    <p id="success-status" class="success-status">확인 중…</p>
-    <a class="success-link" href="index.html" id="success-back" hidden>계산기로 돌아가기</a>
+    <p id="success-status" class="success-status" data-i18n="successChecking">확인 중…</p>
+    <a class="success-link" href="index.html" id="success-back" hidden data-i18n="successBack">계산기로 돌아가기</a>
   </main>
+  <script src="i18n.js"></script>
   <script src="stripe-config.js"></script>
   <script>
+    CalcI18n.apply(document);
+    document.title = CalcI18n.t("successTitle");
+
     (function () {
       var statusEl = document.getElementById("success-status");
       var back = document.getElementById("success-back");
@@ -35,7 +40,7 @@
       }
 
       if (!sessionId) {
-        statusEl.textContent = "세션 정보가 없습니다. 계산기에서 다시 결제를 시도해 주세요.";
+        statusEl.textContent = CalcI18n.t("successNoSession");
         showBack();
         return;
       }
@@ -54,25 +59,21 @@
             var cur = parseInt(localStorage.getItem("calc_ent_credits") || "0", 10);
             var add = data.creditsToAdd != null ? data.creditsToAdd : 10;
             localStorage.setItem("calc_ent_credits", String(cur + add));
-            statusEl.textContent =
-              add + "회 이용권이 적용되었습니다. 계산기로 돌아가서 = 를 눌러 보세요.";
+            statusEl.textContent = CalcI18n.t("successPack", { n: add });
           } else if (data.ok && data.type === "subscription") {
             var existing = parseInt(localStorage.getItem("calc_ent_sub_until") || "0", 10);
             var next = Math.max(existing, data.subscriptionEndsAt || 0);
             localStorage.setItem("calc_ent_sub_until", String(next));
-            statusEl.textContent =
-              "월 구독이 적용되었습니다. 결제 기간 동안 무제한으로 이용할 수 있어요.";
+            statusEl.textContent = CalcI18n.t("successSub");
           } else if (data.reason === "unpaid") {
-            statusEl.textContent = "결제가 완료되지 않았습니다.";
+            statusEl.textContent = CalcI18n.t("successUnpaid");
           } else {
             statusEl.textContent =
-              (data.error && String(data.error)) ||
-              "이용권을 적용할 수 없습니다. 잠시 후 다시 시도하거나 관리자에게 문의하세요.";
+              (data.error && String(data.error)) || CalcI18n.t("successGeneric");
           }
         })
         .catch(function () {
-          statusEl.textContent =
-            "서버와 통신하지 못했습니다. Netlify에 사이트와 Functions를 배포했는지, STRIPE_SECRET_KEY가 설정됐는지 확인해 주세요.";
+          statusEl.textContent = CalcI18n.t("successNetwork");
         })
         .finally(showBack);
     })();

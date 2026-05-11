@@ -76,6 +76,58 @@ body {
   }
 }
 
+.lang-switch {
+  position: fixed;
+  z-index: 95;
+  top: max(0.45rem, env(safe-area-inset-top, 0px));
+  right: max(0.45rem, env(safe-area-inset-right, 0px));
+  display: flex;
+  gap: 0.12rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.lang-switch__btn {
+  appearance: none;
+  margin: 0;
+  border: none;
+  border-radius: 999px;
+  padding: 0.28rem 0.45rem;
+  min-width: 2rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.65);
+  background: transparent;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    transform 0.12s ease;
+}
+
+.lang-switch__btn:hover {
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lang-switch__btn--active {
+  color: #0f1419;
+  background: linear-gradient(125deg, #ffbe0b, #ff006e, #7afcff);
+  background-size: 160% 160%;
+  box-shadow: 0 0 12px rgba(255, 0, 110, 0.35);
+}
+
+.lang-switch__btn:focus-visible {
+  outline: 2px solid #fde047;
+  outline-offset: 2px;
+}
+
 .app {
   width: 100%;
   max-width: 320px;
