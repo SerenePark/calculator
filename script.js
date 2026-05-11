@@ -1,22 +1,79 @@
 (function () {
-  // 데모: 결과는 브라우저에 이미 있어 우회 가능합니다. 실제 과금·잠금은 서버에서 결제 검증 후 결과를 내려주세요.
+  const LS_CREDITS = "calc_ent_credits";
+  const LS_SUB_UNTIL = "calc_ent_sub_until";
 
   const display = document.getElementById("display");
   const keys = document.getElementById("keys");
-  const paywallBar = document.getElementById("paywall-bar");
-  const btnViewResults = document.getElementById("btn-view-results");
-  const checkoutModal = document.getElementById("checkout-modal");
-  const checkoutBackdrop = document.getElementById("checkout-backdrop");
-  const btnPayDemo = document.getElementById("btn-pay-demo");
-  const btnCheckoutClose = document.getElementById("btn-checkout-close");
+  const entStatus = document.getElementById("ent-status");
+  const pricingModal = document.getElementById("pricing-modal");
+  const pricingBackdrop = document.getElementById("pricing-backdrop");
+  const btnBuyPack = document.getElementById("btn-buy-pack");
+  const btnBuySub = document.getElementById("btn-buy-sub");
+  const btnPricingClose = document.getElementById("btn-pricing-close");
 
-  const MASK = "········";
+  const pricePack = window.STRIPE_PRICE_PACK_5;
+  const priceSub = window.STRIPE_PRICE_SUB_MONTHLY;
+  const apiBase = typeof window.STRIPE_API_BASE === "string" ? window.STRIPE_API_BASE : "";
 
   let current = "0";
   let stored = null;
   let pendingOp = null;
   let freshEntry = true;
-  let paywallLocked = false;
+
+  function getCredits() {
+    const n = parseInt(localStorage.getItem(LS_CREDITS) || "0", 10);
+    return Number.isFinite(n) && n > 0 ? n : 0;
+  }
+
+  function setCredits(n) {
+    const v = Math.max(0, Math.floor(n));
+    localStorage.setItem(LS_CREDITS, String(v));
+  }
+
+  function getSubUntil() {
+    const n = parseInt(localStorage.getItem(LS_SUB_UNTIL) || "0", 10);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  function hasUnlimited() {
+    return Date.now() < getSubUntil();
+  }
+
+  function canUse() {
+    return hasUnlimited() || getCredits() > 0;
+  }
+
+  function updateEntitlementStatus() {
+    if (!entStatus) return;
+    if (hasUnlimited()) {
+      const d = new Date(getSubUntil());
+      entStatus.textContent =
+        "월 구독 이용 중 · 무제한 (~" +
+        d.toLocaleDateString("ko-KR", { year: "numeric", month: "short", day: "numeric" }) +
+        ")";
+    } else {
+      const c = getCredits();
+      entStatus.textContent =
+        c > 0
+          ? "남은 횟수: " + c + "회 (= 결과를 볼 때마다 1회 차감)"
+          : "이용권 없음 · = 를 누르면 구매 화면이 열립니다";
+    }
+  }
+
+  function isPricingOpen() {
+    return !pricingModal.classList.contains("checkout-modal--hidden");
+  }
+
+  function openPricingModal() {
+    pricingModal.classList.remove("checkout-modal--hidden");
+    pricingModal.setAttribute("aria-hidden", "false");
+    btnBuyPack.focus();
+  }
+
+  function closePricingModal() {
+    pricingModal.classList.add("checkout-modal--hidden");
+    pricingModal.setAttribute("aria-hidden", "true");
+  }
 
   function formatForDisplay(n) {
     if (!Number.isFinite(n)) return "Error";
@@ -27,32 +84,7 @@
   }
 
   function updateDisplay() {
-    display.textContent = paywallLocked ? MASK : current;
-  }
-
-  function openCheckoutModal() {
-    checkoutModal.classList.remove("checkout-modal--hidden");
-    checkoutModal.setAttribute("aria-hidden", "false");
-    btnPayDemo.focus();
-  }
-
-  function closeCheckoutModal() {
-    checkoutModal.classList.add("checkout-modal--hidden");
-    checkoutModal.setAttribute("aria-hidden", "true");
-  }
-
-  function armPaywall() {
-    paywallLocked = true;
-    paywallBar.hidden = false;
-    keys.classList.add("keys--locked");
-    updateDisplay();
-  }
-
-  function unlockResult() {
-    paywallLocked = false;
-    paywallBar.hidden = true;
-    keys.classList.remove("keys--locked");
-    updateDisplay();
+    display.textContent = current;
   }
 
   function resetAll() {
@@ -60,10 +92,7 @@
     stored = null;
     pendingOp = null;
     freshEntry = true;
-    paywallLocked = false;
-    paywallBar.hidden = true;
-    keys.classList.remove("keys--locked");
-    closeCheckoutModal();
+    closePricingModal();
     updateDisplay();
   }
 
@@ -108,15 +137,31 @@
     const a = stored;
     const b = parseFloat(current);
     const result = applyOp(a, b, pendingOp);
-    current = formatForDisplay(result);
-    stored = null;
-    pendingOp = null;
-    freshEntry = true;
-    if (current === "Error") {
+    const formatted = formatForDisplay(result);
+
+    if (formatted === "Error") {
+      current = formatted;
+      stored = null;
+      pendingOp = null;
+      freshEntry = true;
       updateDisplay();
       return;
     }
-    armPaywall();
+
+    if (!canUse()) {
+      openPricingModal();
+      return;
+    }
+
+    current = formatted;
+    stored = null;
+    pendingOp = null;
+    freshEntry = true;
+    if (!hasUnlimited()) {
+      setCredits(getCredits() - 1);
+    }
+    updateDisplay();
+    updateEntitlementStatus();
   }
 
   function setOperator(op) {
@@ -161,31 +206,62 @@
     updateDisplay();
   }
 
-  btnViewResults.addEventListener("click", () => {
-    if (paywallLocked) openCheckoutModal();
+  function startCheckout(priceId, mode) {
+    if (!priceId) {
+      alert("stripe-config.js 에 Price ID가 설정돼 있는지 확인해 주세요.");
+      return;
+    }
+    const url = apiBase + "/.netlify/functions/create-checkout-session";
+    btnBuyPack.disabled = true;
+    btnBuySub.disabled = true;
+    fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ priceId, mode }),
+    })
+      .then(function (r) {
+        return r.json().then(function (data) {
+          return { ok: r.ok, data: data };
+        });
+      })
+      .then(function (_ref) {
+        var ok = _ref.ok;
+        var data = _ref.data;
+        if (ok && data.url) {
+          window.location.href = data.url;
+          return;
+        }
+        var msg =
+          (data && data.error) ||
+          "결제 페이지를 열 수 없습니다. Netlify 배포와 STRIPE_SECRET_KEY 를 확인해 주세요.";
+        alert(msg);
+      })
+      .catch(function () {
+        alert(
+          "서버에 연결할 수 없습니다. Netlify에 배포했는지, 같은 주소에서 열고 있는지 확인해 주세요."
+        );
+      })
+      .finally(function () {
+        btnBuyPack.disabled = false;
+        btnBuySub.disabled = false;
+      });
+  }
+
+  btnBuyPack.addEventListener("click", function () {
+    startCheckout(pricePack, "payment");
   });
 
-  btnPayDemo.addEventListener("click", () => {
-    closeCheckoutModal();
-    unlockResult();
+  btnBuySub.addEventListener("click", function () {
+    startCheckout(priceSub, "subscription");
   });
 
-  btnCheckoutClose.addEventListener("click", () => {
-    closeCheckoutModal();
-  });
+  btnPricingClose.addEventListener("click", closePricingModal);
+  pricingBackdrop.addEventListener("click", closePricingModal);
 
-  checkoutBackdrop.addEventListener("click", () => {
-    closeCheckoutModal();
-  });
-
-  keys.addEventListener("click", (e) => {
+  keys.addEventListener("click", function (e) {
     const btn = e.target.closest("button[data-action]");
     if (!btn) return;
     const action = btn.dataset.action;
-
-    if (paywallLocked && action !== "clear") {
-      return;
-    }
 
     if (current === "Error" && action !== "clear") {
       return;
@@ -218,27 +294,13 @@
     }
   });
 
-  document.addEventListener("keydown", (e) => {
-    if (paywallLocked) {
+  document.addEventListener("keydown", function (e) {
+    if (isPricingOpen()) {
       if (e.key === "Escape") {
         e.preventDefault();
-        resetAll();
+        closePricingModal();
         return;
       }
-      if (e.key === "Enter" || e.key === "=") {
-        e.preventDefault();
-        openCheckoutModal();
-        return;
-      }
-      const block =
-        (e.key >= "0" && e.key <= "9") ||
-        e.key === "." ||
-        e.key === "+" ||
-        e.key === "-" ||
-        e.key === "*" ||
-        e.key === "/" ||
-        e.key === "Backspace";
-      if (block) e.preventDefault();
       return;
     }
 
@@ -280,4 +342,5 @@
   });
 
   updateDisplay();
+  updateEntitlementStatus();
 })();

@@ -3,61 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="계산 후 결제하고 결과 보기 (데모)">
+  <meta name="description" content="이용권 기반 계산기">
   <title>계산기</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app">
     <h1 class="app-title">계산기</h1>
+    <p id="ent-status" class="ent-status" aria-live="polite"></p>
     <div class="calculator" role="application" aria-label="계산기">
       <div class="display" aria-live="polite">
         <span class="display-value" id="display">0</span>
       </div>
-      <div id="paywall-bar" class="paywall-bar" hidden>
-        <p class="paywall-bar__text">결과는 결제 후에만 볼 수 있어요.</p>
-        <button type="button" class="paywall-bar__btn" id="btn-view-results">결과 보기 · 결제하기</button>
-      </div>
       <div class="keys" id="keys">
-        <button type="button" class="key key-fn" data-action="clear" aria-label="All clear">AC</button>
-        <button type="button" class="key key-fn" data-action="sign" aria-label="Plus minus">±</button>
-        <button type="button" class="key key-fn" data-action="percent" aria-label="Percent">%</button>
-        <button type="button" class="key key-op" data-action="operator" data-value="/" aria-label="Divide">÷</button>
+        <button type="button" class="key key-fn" data-action="clear" aria-label="전체 지우기">AC</button>
+        <button type="button" class="key key-fn" data-action="sign" aria-label="부호">±</button>
+        <button type="button" class="key key-fn" data-action="percent" aria-label="퍼센트">%</button>
+        <button type="button" class="key key-op" data-action="operator" data-value="/" aria-label="나누기">÷</button>
 
         <button type="button" class="key key-num" data-action="digit" data-value="7">7</button>
         <button type="button" class="key key-num" data-action="digit" data-value="8">8</button>
         <button type="button" class="key key-num" data-action="digit" data-value="9">9</button>
-        <button type="button" class="key key-op" data-action="operator" data-value="*" aria-label="Multiply">×</button>
+        <button type="button" class="key key-op" data-action="operator" data-value="*" aria-label="곱하기">×</button>
 
         <button type="button" class="key key-num" data-action="digit" data-value="4">4</button>
         <button type="button" class="key key-num" data-action="digit" data-value="5">5</button>
         <button type="button" class="key key-num" data-action="digit" data-value="6">6</button>
-        <button type="button" class="key key-op" data-action="operator" data-value="-" aria-label="Subtract">−</button>
+        <button type="button" class="key key-op" data-action="operator" data-value="-" aria-label="빼기">−</button>
 
         <button type="button" class="key key-num" data-action="digit" data-value="1">1</button>
         <button type="button" class="key key-num" data-action="digit" data-value="2">2</button>
         <button type="button" class="key key-num" data-action="digit" data-value="3">3</button>
-        <button type="button" class="key key-op" data-action="operator" data-value="+" aria-label="Add">+</button>
+        <button type="button" class="key key-op" data-action="operator" data-value="+" aria-label="더하기">+</button>
 
         <button type="button" class="key key-num key-zero" data-action="digit" data-value="0">0</button>
         <button type="button" class="key key-num" data-action="decimal" data-value=".">.</button>
-        <button type="button" class="key key-eq" data-action="equals" aria-label="Equals">=</button>
+        <button type="button" class="key key-eq" data-action="equals" aria-label="계산">=</button>
       </div>
     </div>
   </main>
 
-  <div id="checkout-modal" class="checkout-modal checkout-modal--hidden" aria-hidden="true" role="dialog" aria-labelledby="checkout-title">
-    <div class="checkout-modal__backdrop" id="checkout-backdrop" tabindex="-1"></div>
+  <div id="pricing-modal" class="checkout-modal checkout-modal--hidden" aria-hidden="true" role="dialog" aria-labelledby="pricing-title">
+    <div class="checkout-modal__backdrop" id="pricing-backdrop" tabindex="-1"></div>
     <div class="checkout-modal__card">
-      <h2 id="checkout-title">결제</h2>
-      <p class="checkout-modal__lead">계산 결과를 보려면 결제를 완료해 주세요.</p>
-      <p class="checkout-modal__price" id="checkout-price">₩1,000</p>
-      <p class="checkout-modal__note">이 페이지는 <strong>데모</strong>입니다. 아래 버튼은 실제 결제가 아니라, 결제 완료를 가정하고 결과만 보여 줍니다.</p>
-      <button type="button" class="checkout-modal__pay" id="btn-pay-demo">데모: 결제 완료</button>
-      <button type="button" class="checkout-modal__close" id="btn-checkout-close">닫기</button>
+      <h2 id="pricing-title">이용권이 필요합니다</h2>
+      <p class="checkout-modal__lead">
+        <strong>=</strong> 로 결과를 볼 때마다 1회가 차감됩니다. 월 구독 중이면 무제한입니다.
+      </p>
+      <div class="pricing-actions">
+        <button type="button" class="checkout-modal__pay checkout-modal__pay--secondary" id="btn-buy-pack">
+          5회 이용권 · ₩5,000
+        </button>
+        <button type="button" class="checkout-modal__pay" id="btn-buy-sub">
+          월 무제한 · ₩50,000
+        </button>
+      </div>
+      <p class="checkout-modal__note">
+        결제는 Stripe Checkout으로 진행됩니다. 사이트는 Netlify에 올리고 <code>STRIPE_SECRET_KEY</code> 환경 변수를 설정해야 합니다.
+      </p>
+      <button type="button" class="checkout-modal__close" id="btn-pricing-close">닫기</button>
     </div>
   </div>
 
+  <script src="stripe-config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
