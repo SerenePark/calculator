@@ -299,15 +299,20 @@ html[data-theme="pink-cat"] body::after {
   content: none;
 }
 
+/* 한 장의 가족 이미지를 반으로 나눔: 왼쪽=아빠, 오른쪽=엄마 (decor/parents-family.png) */
 html[data-theme="parents"] body::before {
   content: "";
   position: fixed;
   left: 0;
-  top: 6%;
-  width: min(28vw, 210px);
-  height: min(78vh, 540px);
-  background: url("decor/mom-doodle.svg") center bottom / contain no-repeat;
-  opacity: 0.94;
+  top: 5%;
+  width: min(34vw, 260px);
+  height: min(82vh, 580px);
+  background-color: transparent;
+  background-image: url("decor/parents-family.png");
+  background-repeat: no-repeat;
+  background-size: 200% auto;
+  background-position: left 55%;
+  opacity: 0.97;
   z-index: 0;
   pointer-events: none;
 }
@@ -316,11 +321,15 @@ html[data-theme="parents"] body::after {
   content: "";
   position: fixed;
   right: 0;
-  top: 6%;
-  width: min(28vw, 210px);
-  height: min(78vh, 540px);
-  background: url("decor/dad-doodle.svg") center bottom / contain no-repeat;
-  opacity: 0.94;
+  top: 5%;
+  width: min(34vw, 260px);
+  height: min(82vh, 580px);
+  background-color: transparent;
+  background-image: url("decor/parents-family.png");
+  background-repeat: no-repeat;
+  background-size: 200% auto;
+  background-position: right 55%;
+  opacity: 0.97;
   z-index: 0;
   pointer-events: none;
 }
@@ -359,8 +368,9 @@ html[data-theme="space"] body::after {
 @media (max-width: 520px) {
   html[data-theme="parents"] body::before,
   html[data-theme="parents"] body::after {
-    width: min(34vw, 120px);
-    opacity: 0.72;
-    top: 12%;
+    width: min(40vw, 150px);
+    height: min(70vh, 480px);
+    opacity: 0.88;
+    top: 10%;
   }
 }
