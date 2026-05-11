@@ -89,7 +89,7 @@
   }
 
   function canUse() {
-    return hasUnlimited() || getCredits() > 0;
+    return reelsDemoCheckout || hasUnlimited() || getCredits() > 0;
   }
 
   function updateEntitlementStatus() {
@@ -270,7 +270,7 @@
     stored = null;
     pendingOp = null;
     freshEntry = true;
-    if (!hasUnlimited()) {
+    if (!reelsDemoCheckout && !hasUnlimited()) {
       setCredits(getCredits() - 1);
     }
     updateDisplay();
