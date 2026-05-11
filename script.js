@@ -1,11 +1,22 @@
 (function () {
+  // 데모: 결과는 브라우저에 이미 있어 우회 가능합니다. 실제 과금·잠금은 서버에서 결제 검증 후 결과를 내려주세요.
+
   const display = document.getElementById("display");
   const keys = document.getElementById("keys");
+  const paywallBar = document.getElementById("paywall-bar");
+  const btnViewResults = document.getElementById("btn-view-results");
+  const checkoutModal = document.getElementById("checkout-modal");
+  const checkoutBackdrop = document.getElementById("checkout-backdrop");
+  const btnPayDemo = document.getElementById("btn-pay-demo");
+  const btnCheckoutClose = document.getElementById("btn-checkout-close");
+
+  const MASK = "········";
 
   let current = "0";
   let stored = null;
   let pendingOp = null;
   let freshEntry = true;
+  let paywallLocked = false;
 
   function formatForDisplay(n) {
     if (!Number.isFinite(n)) return "Error";
@@ -16,7 +27,32 @@
   }
 
   function updateDisplay() {
-    display.textContent = current;
+    display.textContent = paywallLocked ? MASK : current;
+  }
+
+  function openCheckoutModal() {
+    checkoutModal.classList.remove("checkout-modal--hidden");
+    checkoutModal.setAttribute("aria-hidden", "false");
+    btnPayDemo.focus();
+  }
+
+  function closeCheckoutModal() {
+    checkoutModal.classList.add("checkout-modal--hidden");
+    checkoutModal.setAttribute("aria-hidden", "true");
+  }
+
+  function armPaywall() {
+    paywallLocked = true;
+    paywallBar.hidden = false;
+    keys.classList.add("keys--locked");
+    updateDisplay();
+  }
+
+  function unlockResult() {
+    paywallLocked = false;
+    paywallBar.hidden = true;
+    keys.classList.remove("keys--locked");
+    updateDisplay();
   }
 
   function resetAll() {
@@ -24,6 +60,10 @@
     stored = null;
     pendingOp = null;
     freshEntry = true;
+    paywallLocked = false;
+    paywallBar.hidden = true;
+    keys.classList.remove("keys--locked");
+    closeCheckoutModal();
     updateDisplay();
   }
 
@@ -72,7 +112,11 @@
     stored = null;
     pendingOp = null;
     freshEntry = true;
-    updateDisplay();
+    if (current === "Error") {
+      updateDisplay();
+      return;
+    }
+    armPaywall();
   }
 
   function setOperator(op) {
@@ -117,10 +161,31 @@
     updateDisplay();
   }
 
+  btnViewResults.addEventListener("click", () => {
+    if (paywallLocked) openCheckoutModal();
+  });
+
+  btnPayDemo.addEventListener("click", () => {
+    closeCheckoutModal();
+    unlockResult();
+  });
+
+  btnCheckoutClose.addEventListener("click", () => {
+    closeCheckoutModal();
+  });
+
+  checkoutBackdrop.addEventListener("click", () => {
+    closeCheckoutModal();
+  });
+
   keys.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-action]");
     if (!btn) return;
     const action = btn.dataset.action;
+
+    if (paywallLocked && action !== "clear") {
+      return;
+    }
 
     if (current === "Error" && action !== "clear") {
       return;
@@ -154,6 +219,29 @@
   });
 
   document.addEventListener("keydown", (e) => {
+    if (paywallLocked) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        resetAll();
+        return;
+      }
+      if (e.key === "Enter" || e.key === "=") {
+        e.preventDefault();
+        openCheckoutModal();
+        return;
+      }
+      const block =
+        (e.key >= "0" && e.key <= "9") ||
+        e.key === "." ||
+        e.key === "+" ||
+        e.key === "-" ||
+        e.key === "*" ||
+        e.key === "/" ||
+        e.key === "Backspace";
+      if (block) e.preventDefault();
+      return;
+    }
+
     if (current === "Error" && e.key !== "Escape") return;
 
     if (e.key >= "0" && e.key <= "9") {
