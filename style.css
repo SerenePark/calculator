@@ -41,6 +41,15 @@ body {
   max-width: 320px;
 }
 
+.app-title {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
 .calculator {
   background: var(--surface);
   border-radius: calc(var(--radius) + 6px);
