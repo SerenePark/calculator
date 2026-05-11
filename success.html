@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>결제 완료</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="themes.css">
+  <script>
+    try {
+      var _t = localStorage.getItem("calc_theme");
+      if (_t) document.documentElement.setAttribute("data-theme", _t);
+      else document.documentElement.setAttribute("data-theme", "pink-cat");
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "pink-cat");
+    }
+  </script>
 </head>
 <body class="success-page">
   <main class="success-card">

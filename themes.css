@@ -1,0 +1,291 @@
+/* 테마: html[data-theme] 로 변수 덮어씀 (:root 의 핑크 기본은 pink-cat 과 동일 계열) */
+
+.theme-dock {
+  position: fixed;
+  right: 0.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+  padding: 0.45rem;
+  border-radius: 14px 0 0 14px;
+  background: rgba(20, 12, 28, 0.45);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: none;
+  max-height: 90dvh;
+  overflow-y: auto;
+}
+
+.theme-dock__label {
+  margin: 0;
+  padding: 0.15rem 0.25rem 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.88);
+  text-align: center;
+}
+
+.theme-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  width: 3.35rem;
+  min-height: 3.1rem;
+  padding: 0.35rem 0.25rem;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.58rem;
+  font-weight: 600;
+  line-height: 1.15;
+  text-align: center;
+  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+
+.theme-chip__emoji {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.theme-chip:hover {
+  transform: scale(1.04);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.theme-chip:focus-visible {
+  outline: 2px solid #fde047;
+  outline-offset: 2px;
+}
+
+.theme-chip--active {
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.theme-chip--pink {
+  background: linear-gradient(160deg, #ffd6ec, #ff9ec8);
+  color: #5c1a3d;
+}
+
+.theme-chip--space {
+  background: linear-gradient(160deg, #1e1b4b, #312e81);
+  color: #e0e7ff;
+}
+
+.theme-chip--parents {
+  background: linear-gradient(160deg, #fff7ed, #fecdd3);
+  color: #7c2d12;
+}
+
+.theme-chip--jesus {
+  background: linear-gradient(160deg, #dbeafe, #fef9c3);
+  color: #1e3a5f;
+}
+
+@media (max-width: 520px) {
+  .theme-dock {
+    top: auto;
+    bottom: 0.35rem;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: calc(100vw - 1rem);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    max-height: none;
+  }
+
+  .theme-dock__label {
+    width: 100%;
+    flex-basis: 100%;
+  }
+
+  .theme-chip {
+    width: auto;
+    min-width: 4.5rem;
+    min-height: 2.85rem;
+    flex-direction: row;
+    gap: 0.35rem;
+    padding: 0.4rem 0.5rem;
+  }
+}
+
+/* --- 우주 --- */
+html[data-theme="space"] {
+  --body-fallback: #0c0820;
+  --body-bg:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.35) 0%, transparent 55%),
+    radial-gradient(circle at 15% 40%, rgba(56, 189, 248, 0.12) 0%, transparent 30%),
+    radial-gradient(circle at 88% 70%, rgba(167, 139, 250, 0.15) 0%, transparent 28%),
+    radial-gradient(1.5px 1.5px at 20% 30%, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1px 1px at 60% 80%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1.2px 1.2px at 80% 15%, rgba(255, 255, 255, 0.85), transparent),
+    radial-gradient(1px 1px at 40% 60%, rgba(255, 255, 255, 0.6), transparent),
+    linear-gradient(180deg, #0f0a1f 0%, #1a1033 45%, #0d1525 100%);
+  --bg: #0f0a1f;
+  --surface: #1a1535;
+  --surface-raised: #252047;
+  --text: #eef2ff;
+  --text-muted: #a5b4fc;
+  --accent: #38bdf8;
+  --accent-dim: #0ea5e9;
+  --op: #818cf8;
+  --op-hover: #a5b4fc;
+  --eq: #f472b6;
+  --eq-hover: #f9a8d4;
+  --shadow: 0 24px 56px rgba(0, 0, 0, 0.55);
+  --display-border: 1px solid rgba(129, 140, 248, 0.35);
+  --calculator-border: 1px solid rgba(99, 102, 241, 0.25);
+  --ent-bg: rgba(30, 27, 75, 0.55);
+  --ent-border: 1px solid rgba(129, 140, 248, 0.25);
+  --key-text: #f8fafc;
+  --key-num-a: #334155;
+  --key-num-b: #1e293b;
+  --key-num-ha: #475569;
+  --key-num-hb: #334155;
+  --key-fn-a: #2e2a4d;
+  --key-fn-b: #1e1b36;
+  --key-fn-c: #94a3b8;
+  --key-fn-d: #cbd5e1;
+  --key-fn-ha: #3d3a5c;
+  --key-fn-hb: #2a2640;
+  --key-fn-color: #94a3b8;
+  --key-fn-hover-color: #e2e8f0;
+  --key-op-a: #6366f1;
+  --key-op-b: #4338ca;
+  --key-op-ha: #818cf8;
+  --key-op-hb: #4f46e5;
+  --key-eq-a: #ec4899;
+  --key-eq-b: #be185d;
+  --key-eq-ha: #f472b6;
+  --key-eq-hb: #db2777;
+  --key-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+}
+
+/* --- 엄마아빠의 사랑 --- */
+html[data-theme="parents"] {
+  --body-fallback: #fff7ed;
+  --body-bg:
+    radial-gradient(circle at 12% 20%, rgba(254, 215, 170, 0.55) 0%, transparent 28%),
+    radial-gradient(circle at 88% 25%, rgba(252, 231, 243, 0.65) 0%, transparent 30%),
+    radial-gradient(circle at 50% 90%, rgba(254, 243, 199, 0.5) 0%, transparent 35%),
+    linear-gradient(165deg, #fffbeb 0%, #fff1f2 40%, #fef3c7 100%);
+  --bg: #fff7ed;
+  --surface: #fffdfb;
+  --surface-raised: #fff4e6;
+  --text: #78350f;
+  --text-muted: #b45309;
+  --accent: #ea580c;
+  --accent-dim: #c2410c;
+  --op: #db2777;
+  --op-hover: #ec4899;
+  --eq: #dc2626;
+  --eq-hover: #ef4444;
+  --shadow: 0 20px 48px rgba(180, 83, 9, 0.15);
+  --display-border: 1px solid rgba(251, 191, 36, 0.45);
+  --calculator-border: 1px solid rgba(252, 165, 165, 0.55);
+  --ent-bg: rgba(255, 255, 255, 0.7);
+  --ent-border: 1px solid rgba(251, 191, 36, 0.4);
+  --key-text: #78350f;
+  --key-num-a: #ffedd5;
+  --key-num-b: #fdba74;
+  --key-num-ha: #fff7ed;
+  --key-num-hb: #fb923c;
+  --key-fn-a: #fce7f3;
+  --key-fn-b: #fbcfe8;
+  --key-fn-c: #9a3412;
+  --key-fn-d: #7c2d12;
+  --key-fn-ha: #fdf2f8;
+  --key-fn-hb: #fbcfe8;
+  --key-fn-color: #9a3412;
+  --key-fn-hover-color: #431407;
+  --key-op-a: #f472b6;
+  --key-op-b: #db2777;
+  --key-op-ha: #f9a8d4;
+  --key-op-hb: #ec4899;
+  --key-eq-a: #f87171;
+  --key-eq-b: #dc2626;
+  --key-eq-ha: #fca5a5;
+  --key-eq-hb: #ef4444;
+  --key-shadow: 0 2px 0 rgba(180, 83, 9, 0.2);
+}
+
+/* --- 예수님 (하늘·빛 느낌의 오리지널 팔레트, 상표 이미지 없음) --- */
+html[data-theme="jesus"] {
+  --body-fallback: #e8f4fc;
+  --body-bg:
+    radial-gradient(ellipse 90% 55% at 50% -5%, rgba(250, 204, 21, 0.35) 0%, transparent 52%),
+    radial-gradient(circle at 12% 88%, rgba(59, 130, 246, 0.14) 0%, transparent 38%),
+    radial-gradient(circle at 92% 75%, rgba(147, 197, 253, 0.2) 0%, transparent 32%),
+    linear-gradient(175deg, #f0f9ff 0%, #fefce8 42%, #e0f2fe 100%);
+  --bg: #e0f2fe;
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-raised: #f8fafc;
+  --text: #0c4a6e;
+  --text-muted: #0369a1;
+  --accent: #0284c7;
+  --accent-dim: #0369a1;
+  --op: #4f46e5;
+  --op-hover: #6366f1;
+  --eq: #ca8a04;
+  --eq-hover: #eab308;
+  --shadow: 0 20px 50px rgba(12, 74, 110, 0.12);
+  --display-border: 1px solid rgba(2, 132, 199, 0.25);
+  --calculator-border: 1px solid rgba(234, 179, 8, 0.35);
+  --ent-bg: rgba(255, 255, 255, 0.75);
+  --ent-border: 1px solid rgba(2, 132, 199, 0.2);
+  --key-text: #0c4a6e;
+  --key-num-a: #e0f2fe;
+  --key-num-b: #bae6fd;
+  --key-num-ha: #f0f9ff;
+  --key-num-hb: #7dd3fc;
+  --key-fn-a: #f8fafc;
+  --key-fn-b: #e2e8f0;
+  --key-fn-c: #0369a1;
+  --key-fn-d: #0c4a6e;
+  --key-fn-ha: #ffffff;
+  --key-fn-hb: #e2e8f0;
+  --key-fn-color: #0369a1;
+  --key-fn-hover-color: #0c4a6e;
+  --key-op-a: #6366f1;
+  --key-op-b: #4338ca;
+  --key-op-ha: #818cf8;
+  --key-op-hb: #4f46e5;
+  --key-eq-a: #eab308;
+  --key-eq-b: #ca8a04;
+  --key-eq-ha: #fde047;
+  --key-eq-hb: #eab308;
+  --key-shadow: 0 2px 0 rgba(12, 74, 110, 0.15);
+}
+
+html[data-theme="pink-cat"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    radial-gradient(circle at 22% 33%, rgba(255, 105, 180, 0.35) 0%, transparent 8px),
+    radial-gradient(circle at 78% 44%, rgba(255, 182, 193, 0.4) 0%, transparent 10px),
+    radial-gradient(circle at 55% 78%, rgba(255, 192, 203, 0.38) 0%, transparent 9px),
+    radial-gradient(circle at 40% 12%, rgba(255, 218, 233, 0.45) 0%, transparent 7px);
+}
+
+html[data-theme="space"] body::before,
+html[data-theme="parents"] body::before,
+html[data-theme="jesus"] body::before {
+  display: none;
+}

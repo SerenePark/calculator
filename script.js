@@ -1,6 +1,9 @@
 (function () {
   const LS_CREDITS = "calc_ent_credits";
   const LS_SUB_UNTIL = "calc_ent_sub_until";
+  const LS_THEME = "calc_theme";
+  const DEFAULT_THEME = "pink-cat";
+  const THEME_IDS = ["pink-cat", "space", "parents", "jesus"];
 
   const display = document.getElementById("display");
   const keys = document.getElementById("keys");
@@ -14,6 +17,41 @@
   const pricePack = window.STRIPE_PRICE_PACK_5;
   const priceSub = window.STRIPE_PRICE_SUB_MONTHLY;
   const apiBase = typeof window.STRIPE_API_BASE === "string" ? window.STRIPE_API_BASE : "";
+
+  const themeDock = document.querySelector(".theme-dock");
+
+  function applyTheme(themeId) {
+    var id = THEME_IDS.indexOf(themeId) >= 0 ? themeId : DEFAULT_THEME;
+    document.documentElement.setAttribute("data-theme", id);
+    try {
+      localStorage.setItem(LS_THEME, id);
+    } catch (ignore) {}
+    if (themeDock) {
+      themeDock.querySelectorAll(".theme-chip").forEach(function (btn) {
+        var on = btn.getAttribute("data-theme-id") === id;
+        btn.classList.toggle("theme-chip--active", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    }
+  }
+
+  function initTheme() {
+    var saved = DEFAULT_THEME;
+    try {
+      saved = localStorage.getItem(LS_THEME) || DEFAULT_THEME;
+    } catch (ignore) {}
+    applyTheme(saved);
+  }
+
+  if (themeDock) {
+    themeDock.addEventListener("click", function (e) {
+      var chip = e.target.closest(".theme-chip[data-theme-id]");
+      if (!chip) return;
+      applyTheme(chip.getAttribute("data-theme-id"));
+    });
+  }
+
+  initTheme();
 
   let current = "0";
   let stored = null;

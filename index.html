@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="pink-cat">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="이용권 기반 계산기">
   <title>계산기</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="themes.css">
 </head>
 <body>
   <main class="app">
@@ -44,26 +45,56 @@
   </main>
 
   <div id="pricing-modal" class="checkout-modal checkout-modal--hidden" aria-hidden="true" role="dialog" aria-labelledby="pricing-title">
-    <div class="checkout-modal__backdrop" id="pricing-backdrop" tabindex="-1"></div>
-    <div class="checkout-modal__card">
-      <h2 id="pricing-title">이용권이 필요합니다</h2>
-      <p class="checkout-modal__lead">
-        <strong>=</strong> 로 결과를 볼 때마다 1회가 차감됩니다. 월 구독 중이면 무제한입니다.
-      </p>
-      <div class="pricing-actions">
-        <button type="button" class="checkout-modal__pay checkout-modal__pay--secondary" id="btn-buy-pack">
-          5회 이용권 · ₩5,000
-        </button>
-        <button type="button" class="checkout-modal__pay" id="btn-buy-sub">
-          월 무제한 · ₩50,000
-        </button>
+    <div class="checkout-modal__backdrop pricing-modal__backdrop" id="pricing-backdrop" tabindex="-1" aria-hidden="true"></div>
+    <div class="pricing-modal__shell" role="document">
+      <div class="pricing-modal__sparkles" aria-hidden="true"></div>
+      <div class="checkout-modal__card pricing-modal__card-inner">
+        <p class="pricing-modal__hook">
+          <span class="pricing-modal__hook-emoji" aria-hidden="true">💸</span>
+          <span class="pricing-modal__hook-text">돈 벌기 1일차</span>
+          <span class="pricing-modal__hook-sub">· 여기만 레인보우 플렉스</span>
+        </p>
+        <h2 id="pricing-title" class="pricing-modal__title">이용권이 필요해요 ✨</h2>
+        <p class="checkout-modal__lead">
+          <strong>=</strong> 로 결과를 볼 때마다 1회가 차감돼요. 월 구독이면 무제한!
+        </p>
+        <div class="pricing-actions">
+          <button type="button" class="checkout-modal__pay checkout-modal__pay--secondary pricing-modal__btn pricing-modal__btn--pack" id="btn-buy-pack">
+            <span class="pricing-modal__btn-shine" aria-hidden="true"></span>
+            <span class="pricing-modal__btn-label">5회 이용권 · ₩5,000</span>
+          </button>
+          <button type="button" class="checkout-modal__pay pricing-modal__btn pricing-modal__btn--sub" id="btn-buy-sub">
+            <span class="pricing-modal__btn-shine" aria-hidden="true"></span>
+            <span class="pricing-modal__btn-label">월 무제한 · ₩50,000</span>
+          </button>
+        </div>
+        <p class="checkout-modal__note">
+          결제는 Stripe Checkout으로 진행돼요. Netlify에 <code>STRIPE_SECRET_KEY</code> 넣고 배포하면 돼요.
+        </p>
+        <button type="button" class="checkout-modal__close" id="btn-pricing-close">닫기</button>
       </div>
-      <p class="checkout-modal__note">
-        결제는 Stripe Checkout으로 진행됩니다. 사이트는 Netlify에 올리고 <code>STRIPE_SECRET_KEY</code> 환경 변수를 설정해야 합니다.
-      </p>
-      <button type="button" class="checkout-modal__close" id="btn-pricing-close">닫기</button>
     </div>
   </div>
+
+  <aside class="theme-dock" aria-label="계산기 테마 선택">
+    <p class="theme-dock__label">테마</p>
+    <button type="button" class="theme-chip theme-chip--pink theme-chip--active" data-theme-id="pink-cat" aria-pressed="true" title="핑크 냥이 (기본)">
+      <span class="theme-chip__emoji" aria-hidden="true">🎀</span>
+      <span>핑크 냥이</span>
+    </button>
+    <button type="button" class="theme-chip theme-chip--space" data-theme-id="space" aria-pressed="false" title="우주">
+      <span class="theme-chip__emoji" aria-hidden="true">🌌</span>
+      <span>우주</span>
+    </button>
+    <button type="button" class="theme-chip theme-chip--parents" data-theme-id="parents" aria-pressed="false" title="엄마아빠의 사랑">
+      <span class="theme-chip__emoji" aria-hidden="true">💝</span>
+      <span>엄빠사랑</span>
+    </button>
+    <button type="button" class="theme-chip theme-chip--jesus" data-theme-id="jesus" aria-pressed="false" title="예수님">
+      <span class="theme-chip__emoji" aria-hidden="true">🕊️</span>
+      <span>예수님</span>
+    </button>
+  </aside>
 
   <script src="stripe-config.js"></script>
   <script src="script.js"></script>
