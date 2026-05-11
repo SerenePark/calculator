@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 360" width="200" height="360">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M98 52 Q104 48 112 50 Q118 55 120 64 Q118 78 108 82 Q94 84 86 74 Q82 60 88 52 Q92 48 98 52" stroke="#f472b6" stroke-width="4.5" fill="#fecdd3"/>
+    <path d="M76 58 Q70 42 82 32 Q90 28 98 30" stroke="#ec4899" stroke-width="3.5" fill="none"/>
+    <path d="M118 34 Q132 40 128 58 Q124 66 116 68" stroke="#db2777" stroke-width="3.2" fill="none"/>
+    <circle cx="92" cy="62" r="3" fill="#7c2d12" stroke="#7c2d12" stroke-width="2"/>
+    <circle cx="110" cy="62" r="3" fill="#7c2d12" stroke="#7c2d12" stroke-width="2"/>
+    <path d="M94 76 Q102 84 110 76" stroke="#c2410c" stroke-width="3" fill="none"/>
+    <path d="M102 88 L98 118 L72 125 L88 132 L100 128 L102 160" stroke="#f97316" stroke-width="4" fill="none"/>
+    <path d="M102 88 L106 118 L132 122 L114 132 L102 128 L102 160" stroke="#ea580c" stroke-width="4" fill="none"/>
+    <path d="M88 132 Q82 200 78 280 Q76 310 88 340" stroke="#a855f7" stroke-width="5" fill="none"/>
+    <path d="M114 132 Q120 210 124 290 Q126 322 112 342" stroke="#9333ea" stroke-width="5" fill="none"/>
+    <path d="M100 160 L70 220 L58 300 L92 350 L112 350 L146 300 L134 220 L104 160" stroke="#e879f9" stroke-width="4.5" fill="#fce7f3" opacity="0.95"/>
+    <path d="M92 200 L108 208 L102 240" stroke="#c026d3" stroke-width="3" fill="none"/>
+    <text x="100" y="28" font-family="Comic Sans MS, cursive" font-size="14" fill="#b45309" text-anchor="middle" transform="rotate(-4 100 28)">ÄÈ</text>
+  </g>
+</svg>
