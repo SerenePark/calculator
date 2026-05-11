@@ -102,6 +102,37 @@ body {
   border: var(--ent-border);
 }
 
+.buy-cta {
+  width: 100%;
+  margin: -0.25rem 0 1rem;
+  appearance: none;
+  border: none;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #0f0820;
+  background: linear-gradient(95deg, #ffbe0b, #ff006e, #8338ec, #06ffa5, #ffbe0b);
+  background-size: 220% auto;
+  animation: reels-btn-rainbow 2.5s linear infinite;
+  box-shadow: 0 10px 28px rgba(255, 0, 110, 0.3);
+}
+
+.buy-cta:hover {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+}
+
+.buy-cta:active {
+  transform: translateY(0);
+}
+
+.buy-cta:focus-visible {
+  outline: 2px solid #fde047;
+  outline-offset: 3px;
+}
+
 .calculator {
   background: var(--surface);
   border-radius: calc(var(--radius) + 6px);

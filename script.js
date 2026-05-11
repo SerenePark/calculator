@@ -28,6 +28,7 @@
   const reelsResultBackdrop = document.getElementById("reels-result-backdrop");
   const btnReelsDoneOk = document.getElementById("btn-reels-done-ok");
   const btnReelsResultClose = document.getElementById("btn-reels-result-close");
+  const btnOpenPricing = document.getElementById("btn-open-pricing");
 
   const themeDock = document.querySelector(".theme-dock");
 
@@ -374,6 +375,13 @@
 
   btnPricingClose.addEventListener("click", closePricingModal);
   pricingBackdrop.addEventListener("click", closePricingModal);
+
+  if (btnOpenPricing) {
+    btnOpenPricing.hidden = !reelsDemoCheckout;
+    btnOpenPricing.addEventListener("click", function () {
+      openPricingModal();
+    });
+  }
 
   keys.addEventListener("click", function (e) {
     const btn = e.target.closest("button[data-action]");
