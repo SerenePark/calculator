@@ -10,9 +10,9 @@
     try {
       var _t = localStorage.getItem("calc_theme");
       if (_t) document.documentElement.setAttribute("data-theme", _t);
-      else document.documentElement.setAttribute("data-theme", "pink-cat");
+      else document.documentElement.setAttribute("data-theme", "minimal");
     } catch (e) {
-      document.documentElement.setAttribute("data-theme", "pink-cat");
+      document.documentElement.setAttribute("data-theme", "minimal");
     }
   </script>
 </head>
@@ -52,7 +52,7 @@
         .then(function (data) {
           if (data.ok && data.type === "pack") {
             var cur = parseInt(localStorage.getItem("calc_ent_credits") || "0", 10);
-            var add = data.creditsToAdd != null ? data.creditsToAdd : 5;
+            var add = data.creditsToAdd != null ? data.creditsToAdd : 10;
             localStorage.setItem("calc_ent_credits", String(cur + add));
             statusEl.textContent =
               add + "회 이용권이 적용되었습니다. 계산기로 돌아가서 = 를 눌러 보세요.";

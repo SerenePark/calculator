@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="pink-cat">
+<html lang="ko" data-theme="minimal">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
 <body>
   <main class="app">
     <h1 class="app-title">계산기</h1>
-    <p id="ent-status" class="ent-status" aria-live="polite"></p>
+    <p id="ent-status" class="ent-status" aria-live="polite" hidden></p>
     <div class="calculator" role="application" aria-label="계산기">
       <div class="display" aria-live="polite">
         <span class="display-value" id="display">0</span>
@@ -61,7 +61,7 @@
         <div class="pricing-actions">
           <button type="button" class="checkout-modal__pay checkout-modal__pay--secondary pricing-modal__btn pricing-modal__btn--pack" id="btn-buy-pack">
             <span class="pricing-modal__btn-shine" aria-hidden="true"></span>
-            <span class="pricing-modal__btn-label">5회 이용권 · ₩5,000</span>
+            <span class="pricing-modal__btn-label">10회 이용권 · ₩5,000</span>
           </button>
           <button type="button" class="checkout-modal__pay pricing-modal__btn pricing-modal__btn--sub" id="btn-buy-sub">
             <span class="pricing-modal__btn-shine" aria-hidden="true"></span>
@@ -78,7 +78,11 @@
 
   <aside class="theme-dock" aria-label="계산기 테마 선택">
     <p class="theme-dock__label">테마</p>
-    <button type="button" class="theme-chip theme-chip--pink theme-chip--active" data-theme-id="pink-cat" aria-pressed="true" title="핑크 냥이 (기본)">
+    <button type="button" class="theme-chip theme-chip--minimal theme-chip--active" data-theme-id="minimal" aria-pressed="true" title="기본 (배경 없음)">
+      <span class="theme-chip__emoji" aria-hidden="true">🧮</span>
+      <span>기본</span>
+    </button>
+    <button type="button" class="theme-chip theme-chip--pink" data-theme-id="pink-cat" aria-pressed="false" title="핑크 냥이">
       <span class="theme-chip__emoji" aria-hidden="true">🎀</span>
       <span>핑크 냥이</span>
     </button>

@@ -4,56 +4,51 @@
   box-sizing: border-box;
 }
 
-/* 기본 = 핑크 냥 테마 변수 (themes.css에서 테마별로 덮어씀) */
+/* 기본 = 미니멀 테마 (data-theme="minimal" 또는 themes.css 없을 때). 다른 테마는 themes.css */
 :root {
-  --body-fallback: #ffb8d9;
-  --body-bg:
-    radial-gradient(ellipse 100% 80% at 50% -10%, rgba(255, 255, 255, 0.65) 0%, transparent 55%),
-    radial-gradient(circle at 8% 25%, rgba(255, 182, 193, 0.55) 0%, transparent 25%),
-    radial-gradient(circle at 92% 18%, rgba(255, 192, 203, 0.5) 0%, transparent 22%),
-    radial-gradient(circle at 18% 88%, rgba(255, 218, 233, 0.7) 0%, transparent 28%),
-    radial-gradient(circle at 85% 82%, rgba(255, 182, 220, 0.45) 0%, transparent 24%),
-    linear-gradient(168deg, #ffd6ec 0%, #ffc2e2 35%, #ffe4f3 70%, #fff8fc 100%);
-  --bg: #ffd6e8;
-  --surface: #fff5fb;
-  --surface-raised: #ffe8f4;
-  --text: #5c2d44;
-  --text-muted: #9d5c78;
-  --accent: #ff4fa3;
-  --accent-dim: #db2777;
-  --op: #c026d3;
-  --op-hover: #d946ef;
-  --eq: #fb7185;
-  --eq-hover: #f43f5e;
-  --radius: 16px;
-  --shadow: 0 18px 44px rgba(219, 39, 119, 0.22);
-  --display-border: 1px solid rgba(255, 105, 180, 0.35);
-  --calculator-border: 1px solid rgba(255, 182, 203, 0.85);
-  --ent-bg: rgba(255, 255, 255, 0.55);
-  --ent-border: 1px solid rgba(255, 105, 180, 0.38);
-  --key-num-a: #ffc9e4;
-  --key-num-b: #ff7eb8;
-  --key-num-ha: #ffd6ec;
-  --key-num-hb: #ff6ba8;
-  --key-fn-a: #fce7f3;
-  --key-fn-b: #fbcfe8;
-  --key-fn-c: #9d5c78;
-  --key-fn-d: #7c3d56;
-  --key-fn-ha: #fff1f8;
-  --key-fn-hb: #fbcfe8;
-  --key-op-a: #e879f9;
-  --key-op-b: #c026d3;
-  --key-op-ha: #f0abfc;
-  --key-op-hb: #d946ef;
-  --key-eq-a: #fb7185;
-  --key-eq-b: #e11d48;
-  --key-eq-ha: #fda4af;
-  --key-eq-hb: #f43f5e;
-  --key-text: #5c2d44;
+  --body-fallback: #0f1419;
+  --body-bg: radial-gradient(120% 80% at 50% 0%, #1a2838 0%, #0f1419 55%);
+  --bg: #0f1419;
+  --surface: #1a222d;
+  --surface-raised: #232d3a;
+  --text: #e8eef4;
+  --text-muted: #8b9aad;
+  --accent: #3dd6c3;
+  --accent-dim: #2a9d8f;
+  --op: #5b7cfa;
+  --op-hover: #6d8bff;
+  --eq: #e07a5f;
+  --eq-hover: #e8907a;
+  --radius: 14px;
+  --shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  --display-border: 1px solid rgba(0, 0, 0, 0.2);
+  --calculator-border: 1px solid rgba(255, 255, 255, 0.06);
+  --ent-bg: rgba(255, 255, 255, 0.04);
+  --ent-border: 1px solid rgba(255, 255, 255, 0.06);
+  --key-num-a: #2c3848;
+  --key-num-b: #263140;
+  --key-num-ha: #354555;
+  --key-num-hb: #2d3a4a;
+  --key-fn-a: #2a3442;
+  --key-fn-b: #222b36;
+  --key-fn-c: #8b9aad;
+  --key-fn-d: #e8eef4;
+  --key-fn-ha: #323e4e;
+  --key-fn-hb: #2a3442;
+  --key-op-a: #4a63d4;
+  --key-op-b: #3d52b8;
+  --key-op-ha: #6d8bff;
+  --key-op-hb: #4a63d4;
+  --key-eq-a: #e07a5f;
+  --key-eq-b: #c96a52;
+  --key-eq-ha: #e8907a;
+  --key-eq-hb: #e07a5f;
+  --key-text: #e8eef4;
   --key-fn-color: var(--key-fn-c);
-  --key-fn-hover-color: #5c2d44;
-  --key-shadow: 0 3px 0 rgba(190, 24, 93, 0.28);
+  --key-fn-hover-color: #e8eef4;
+  --key-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
 }
+
 
 html {
   font-size: clamp(15px, 2.5vw, 18px);

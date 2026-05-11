@@ -5,7 +5,7 @@
 window.STRIPE_PUBLISHABLE_KEY =
   "pk_test_51Ol2aSFvdwbjRSVAPjjCHPr7lcfwkcnLOIb6u2c59QD5g0TGO47NcjgtSuS1BMLtxveopp1lrvarTZdyOcz8raaY000l2kYQRE";
 
-/** 5,000원 일회성 → 계산 결과(=) 5회 */
+/** 5,000원 일회성 → 계산 결과(=) 10회 */
 window.STRIPE_PRICE_PACK_5 = "price_1TVxEXFvdwbjRSVAwdGPdqgk";
 
 /** 50,000원 월 구독 → 무제한 */

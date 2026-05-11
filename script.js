@@ -2,8 +2,8 @@
   const LS_CREDITS = "calc_ent_credits";
   const LS_SUB_UNTIL = "calc_ent_sub_until";
   const LS_THEME = "calc_theme";
-  const DEFAULT_THEME = "pink-cat";
-  const THEME_IDS = ["pink-cat", "space", "parents", "jesus"];
+  const DEFAULT_THEME = "minimal";
+  const THEME_IDS = ["minimal", "pink-cat", "space", "parents", "jesus"];
 
   const display = document.getElementById("display");
   const keys = document.getElementById("keys");
@@ -83,6 +83,12 @@
 
   function updateEntitlementStatus() {
     if (!entStatus) return;
+    if (!hasUnlimited() && getCredits() <= 0) {
+      entStatus.textContent = "";
+      entStatus.hidden = true;
+      return;
+    }
+    entStatus.hidden = false;
     if (hasUnlimited()) {
       const d = new Date(getSubUntil());
       entStatus.textContent =
@@ -91,10 +97,7 @@
         ")";
     } else {
       const c = getCredits();
-      entStatus.textContent =
-        c > 0
-          ? "남은 횟수: " + c + "회 (= 결과를 볼 때마다 1회 차감)"
-          : "이용권 없음 · = 를 누르면 구매 화면이 열립니다";
+      entStatus.textContent = "남은 횟수: " + c + "회 (= 결과를 볼 때마다 1회 차감)";
     }
   }
 

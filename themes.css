@@ -1,4 +1,4 @@
-/* 테마: html[data-theme] 로 변수 덮어씀 (:root 의 핑크 기본은 pink-cat 과 동일 계열) */
+/* 테마: html[data-theme] 로 변수 덮어씀. 기본 팔레트는 style.css :root(미니멀) */
 
 .theme-dock {
   position: fixed;
@@ -91,6 +91,11 @@
 .theme-chip--jesus {
   background: linear-gradient(160deg, #dbeafe, #fef9c3);
   color: #1e3a5f;
+}
+
+.theme-chip--minimal {
+  background: linear-gradient(160deg, #1a222d, #0f1419);
+  color: #c5d4e3;
 }
 
 @media (max-width: 520px) {
@@ -267,6 +272,57 @@ html[data-theme="jesus"] {
   --key-eq-ha: #fde047;
   --key-eq-hb: #eab308;
   --key-shadow: 0 2px 0 rgba(12, 74, 110, 0.15);
+}
+
+/* --- 핑크 냥이 --- */
+html[data-theme="pink-cat"] {
+  --body-fallback: #ffb8d9;
+  --body-bg:
+    radial-gradient(ellipse 100% 80% at 50% -10%, rgba(255, 255, 255, 0.65) 0%, transparent 55%),
+    radial-gradient(circle at 8% 25%, rgba(255, 182, 193, 0.55) 0%, transparent 25%),
+    radial-gradient(circle at 92% 18%, rgba(255, 192, 203, 0.5) 0%, transparent 22%),
+    radial-gradient(circle at 18% 88%, rgba(255, 218, 233, 0.7) 0%, transparent 28%),
+    radial-gradient(circle at 85% 82%, rgba(255, 182, 220, 0.45) 0%, transparent 24%),
+    linear-gradient(168deg, #ffd6ec 0%, #ffc2e2 35%, #ffe4f3 70%, #fff8fc 100%);
+  --bg: #ffd6e8;
+  --surface: #fff5fb;
+  --surface-raised: #ffe8f4;
+  --text: #5c2d44;
+  --text-muted: #9d5c78;
+  --accent: #ff4fa3;
+  --accent-dim: #db2777;
+  --op: #c026d3;
+  --op-hover: #d946ef;
+  --eq: #fb7185;
+  --eq-hover: #f43f5e;
+  --radius: 16px;
+  --shadow: 0 18px 44px rgba(219, 39, 119, 0.22);
+  --display-border: 1px solid rgba(255, 105, 180, 0.35);
+  --calculator-border: 1px solid rgba(255, 182, 203, 0.85);
+  --ent-bg: rgba(255, 255, 255, 0.55);
+  --ent-border: 1px solid rgba(255, 105, 180, 0.38);
+  --key-num-a: #ffc9e4;
+  --key-num-b: #ff7eb8;
+  --key-num-ha: #ffd6ec;
+  --key-num-hb: #ff6ba8;
+  --key-fn-a: #fce7f3;
+  --key-fn-b: #fbcfe8;
+  --key-fn-c: #9d5c78;
+  --key-fn-d: #7c3d56;
+  --key-fn-ha: #fff1f8;
+  --key-fn-hb: #fbcfe8;
+  --key-op-a: #e879f9;
+  --key-op-b: #c026d3;
+  --key-op-ha: #f0abfc;
+  --key-op-hb: #d946ef;
+  --key-eq-a: #fb7185;
+  --key-eq-b: #e11d48;
+  --key-eq-ha: #fda4af;
+  --key-eq-hb: #f43f5e;
+  --key-text: #5c2d44;
+  --key-fn-color: var(--key-fn-c);
+  --key-fn-hover-color: #5c2d44;
+  --key-shadow: 0 3px 0 rgba(190, 24, 93, 0.28);
 }
 
 /* 배경 그림은 전부 오리지널 SVG. .theme-dock 은 제외 — position:fixed 유지 (뷰포트 오른쪽 끝) */
