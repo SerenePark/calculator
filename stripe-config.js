@@ -16,6 +16,3 @@ window.STRIPE_PRICE_SUB_MONTHLY = "price_1TVxG3FvdwbjRSVAf6no1Tx7";
  * 로컬에서만 다른 포트를 쓸 때만 예: "http://localhost:8888"
  */
 window.STRIPE_API_BASE = "";
-
-/** 릴스 촬영용: true면 구매 버튼이 Stripe 없이 가짜 플로우만 탐. 끝나면 false 로 되돌리세요. */
-window.REELS_DEMO_CHECKOUT = true;

@@ -76,33 +76,18 @@
     </div>
   </div>
 
-  <div id="reels-loading-modal" class="checkout-modal checkout-modal--hidden reels-flow-modal" aria-hidden="true" role="status">
-    <div class="checkout-modal__backdrop reels-flow-modal__backdrop" aria-hidden="true"></div>
-    <div class="reels-flow-modal__card reels-flow-modal__card--loading">
-      <div class="reels-flow-modal__spinner" aria-hidden="true"></div>
-      <p class="reels-flow-modal__loading-text">결제 처리 중…</p>
-    </div>
-  </div>
-
-  <div id="reels-done-modal" class="checkout-modal checkout-modal--hidden reels-flow-modal" aria-hidden="true" role="dialog" aria-labelledby="reels-done-title">
-    <div class="checkout-modal__backdrop reels-flow-modal__backdrop" id="reels-done-backdrop" tabindex="-1" aria-hidden="true"></div>
-    <div class="reels-flow-modal__card reels-flow-modal__card--done" role="document">
-      <p class="reels-flow-modal__done-icon" aria-hidden="true">✓</p>
-      <h2 id="reels-done-title" class="reels-flow-modal__done-title">결제 완료</h2>
-      <p id="reels-done-detail" class="reels-flow-modal__done-detail"></p>
-      <button type="button" class="reels-flow-modal__btn reels-flow-modal__btn--primary" id="btn-reels-done-ok">확인</button>
-    </div>
-  </div>
-
-  <div id="reels-result-modal" class="checkout-modal checkout-modal--hidden reels-result-modal" aria-hidden="true" role="dialog" aria-labelledby="reels-result-heading">
-    <div class="checkout-modal__backdrop reels-result-modal__backdrop" id="reels-result-backdrop" tabindex="-1" aria-hidden="true"></div>
-    <div class="reels-result-modal__shell" role="document">
-      <div class="reels-result-modal__halo" aria-hidden="true"></div>
-      <div class="reels-result-modal__inner">
-        <div class="reels-result-modal__sparkles" aria-hidden="true"></div>
-        <p id="reels-result-heading" class="reels-result-modal__kicker">계산 결과</p>
-        <p id="reels-result-value" class="reels-result-modal__value" aria-live="polite">0</p>
-        <button type="button" class="reels-flow-modal__btn reels-flow-modal__btn--ghost" id="btn-reels-result-close">닫기</button>
+  <div id="result-modal" class="checkout-modal checkout-modal--hidden" aria-hidden="true" role="dialog" aria-labelledby="result-title">
+    <div class="checkout-modal__backdrop result-modal__backdrop" id="result-backdrop" tabindex="-1" aria-hidden="true"></div>
+    <div class="result-modal__shell" role="document">
+      <div class="result-modal__sparkles" aria-hidden="true"></div>
+      <div class="checkout-modal__card result-modal__card-inner">
+        <p class="result-modal__kicker">
+          <span class="result-modal__kicker-emoji" aria-hidden="true">🌈</span>
+          <span class="result-modal__kicker-text">결과가 나왔어요</span>
+        </p>
+        <h2 id="result-title" class="result-modal__title">결과</h2>
+        <div class="result-modal__value" id="result-value" aria-live="polite">0</div>
+        <button type="button" class="checkout-modal__close result-modal__close" id="btn-result-close">닫기</button>
       </div>
     </div>
   </div>
