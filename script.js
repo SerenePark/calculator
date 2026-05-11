@@ -17,6 +17,17 @@
   const pricePack = window.STRIPE_PRICE_PACK_5;
   const priceSub = window.STRIPE_PRICE_SUB_MONTHLY;
   const apiBase = typeof window.STRIPE_API_BASE === "string" ? window.STRIPE_API_BASE : "";
+  const reelsDemoCheckout = !!window.REELS_DEMO_CHECKOUT;
+
+  const reelsLoadingModal = document.getElementById("reels-loading-modal");
+  const reelsDoneModal = document.getElementById("reels-done-modal");
+  const reelsResultModal = document.getElementById("reels-result-modal");
+  const reelsDoneDetail = document.getElementById("reels-done-detail");
+  const reelsResultValue = document.getElementById("reels-result-value");
+  const reelsDoneBackdrop = document.getElementById("reels-done-backdrop");
+  const reelsResultBackdrop = document.getElementById("reels-result-backdrop");
+  const btnReelsDoneOk = document.getElementById("btn-reels-done-ok");
+  const btnReelsResultClose = document.getElementById("btn-reels-result-close");
 
   const themeDock = document.querySelector(".theme-dock");
 
@@ -103,6 +114,67 @@
 
   function isPricingOpen() {
     return !pricingModal.classList.contains("checkout-modal--hidden");
+  }
+
+  function openReelsOverlay(el) {
+    if (!el) return;
+    el.classList.remove("checkout-modal--hidden");
+    el.setAttribute("aria-hidden", "false");
+  }
+
+  function closeReelsOverlay(el) {
+    if (!el) return;
+    el.classList.add("checkout-modal--hidden");
+    el.setAttribute("aria-hidden", "true");
+  }
+
+  function isReelsFlowActive() {
+    if (!reelsLoadingModal || !reelsDoneModal || !reelsResultModal) return false;
+    return (
+      !reelsLoadingModal.classList.contains("checkout-modal--hidden") ||
+      !reelsDoneModal.classList.contains("checkout-modal--hidden") ||
+      !reelsResultModal.classList.contains("checkout-modal--hidden")
+    );
+  }
+
+  function runReelsDemoPurchase(kind) {
+    if (!reelsLoadingModal || !reelsDoneModal || !reelsResultModal || !reelsDoneDetail) return;
+    closePricingModal();
+    openReelsOverlay(reelsLoadingModal);
+    btnBuyPack.disabled = true;
+    btnBuySub.disabled = true;
+    window.setTimeout(function () {
+      closeReelsOverlay(reelsLoadingModal);
+      reelsDoneDetail.textContent =
+        kind === "sub"
+          ? "월 무제한 · 결제가 완료됐어요 ✨"
+          : "10회 이용권 · 결제가 완료됐어요 ✨";
+      openReelsOverlay(reelsDoneModal);
+      if (btnReelsDoneOk) btnReelsDoneOk.focus();
+      btnBuyPack.disabled = false;
+      btnBuySub.disabled = false;
+    }, 1000);
+  }
+
+  if (btnReelsDoneOk) {
+    btnReelsDoneOk.addEventListener("click", function () {
+      closeReelsOverlay(reelsDoneModal);
+      if (reelsResultValue) reelsResultValue.textContent = display ? display.textContent : "0";
+      openReelsOverlay(reelsResultModal);
+      if (btnReelsResultClose) btnReelsResultClose.focus();
+    });
+  }
+
+  if (btnReelsResultClose) {
+    btnReelsResultClose.addEventListener("click", function () {
+      closeReelsOverlay(reelsResultModal);
+    });
+  }
+
+  if (reelsResultBackdrop) {
+    reelsResultBackdrop.addEventListener("click", function () {
+      closeReelsOverlay(reelsResultModal);
+    });
   }
 
   function openPricingModal() {
@@ -248,6 +320,10 @@
   }
 
   function startCheckout(priceId, mode) {
+    if (reelsDemoCheckout) {
+      runReelsDemoPurchase(mode === "subscription" ? "sub" : "pack");
+      return;
+    }
     if (!priceId) {
       alert("stripe-config.js 에 Price ID가 설정돼 있는지 확인해 주세요.");
       return;
@@ -336,6 +412,20 @@
   });
 
   document.addEventListener("keydown", function (e) {
+    if (isReelsFlowActive()) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        if (reelsResultModal && !reelsResultModal.classList.contains("checkout-modal--hidden")) {
+          closeReelsOverlay(reelsResultModal);
+        } else if (reelsDoneModal && !reelsDoneModal.classList.contains("checkout-modal--hidden")) {
+          closeReelsOverlay(reelsDoneModal);
+        }
+        return;
+      }
+      e.preventDefault();
+      return;
+    }
+
     if (isPricingOpen()) {
       if (e.key === "Escape") {
         e.preventDefault();
