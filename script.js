@@ -17,7 +17,9 @@
   const pricePack = window.STRIPE_PRICE_PACK_5;
   const priceSub = window.STRIPE_PRICE_SUB_MONTHLY;
   const apiBase = typeof window.STRIPE_API_BASE === "string" ? window.STRIPE_API_BASE : "";
-  const reelsDemoCheckout = !!window.REELS_DEMO_CHECKOUT;
+  // 릴스 촬영 중에는 캐시/로드 순서 때문에 플래그가 안 잡혀도 동작하게 기본값을 true로 둠.
+  // (릴스 끝나면 stripe-config.js 에서 window.REELS_DEMO_CHECKOUT = false 로 확실히 꺼주세요.)
+  const reelsDemoCheckout = window.REELS_DEMO_CHECKOUT !== false;
 
   const reelsLoadingModal = document.getElementById("reels-loading-modal");
   const reelsDoneModal = document.getElementById("reels-done-modal");
@@ -28,7 +30,6 @@
   const reelsResultBackdrop = document.getElementById("reels-result-backdrop");
   const btnReelsDoneOk = document.getElementById("btn-reels-done-ok");
   const btnReelsResultClose = document.getElementById("btn-reels-result-close");
-  const btnOpenPricing = document.getElementById("btn-open-pricing");
 
   const themeDock = document.querySelector(".theme-dock");
 
@@ -375,13 +376,6 @@
 
   btnPricingClose.addEventListener("click", closePricingModal);
   pricingBackdrop.addEventListener("click", closePricingModal);
-
-  if (btnOpenPricing) {
-    btnOpenPricing.hidden = !reelsDemoCheckout;
-    btnOpenPricing.addEventListener("click", function () {
-      openPricingModal();
-    });
-  }
 
   keys.addEventListener("click", function (e) {
     const btn = e.target.closest("button[data-action]");
