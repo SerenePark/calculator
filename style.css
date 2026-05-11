@@ -1,0 +1,143 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0f1419;
+  --surface: #1a222d;
+  --surface-raised: #232d3a;
+  --text: #e8eef4;
+  --text-muted: #8b9aad;
+  --accent: #3dd6c3;
+  --accent-dim: #2a9d8f;
+  --op: #5b7cfa;
+  --op-hover: #6d8bff;
+  --eq: #e07a5f;
+  --eq-hover: #e8907a;
+  --radius: 14px;
+  --shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+}
+
+html {
+  font-size: clamp(15px, 2.5vw, 18px);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: radial-gradient(120% 80% at 50% 0%, #1a2838 0%, var(--bg) 55%);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.app {
+  width: 100%;
+  max-width: 320px;
+}
+
+.calculator {
+  background: var(--surface);
+  border-radius: calc(var(--radius) + 6px);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.display {
+  background: var(--surface-raised);
+  border-radius: var(--radius);
+  padding: 1.25rem 1rem;
+  margin-bottom: 1rem;
+  min-height: 4.5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.display-value {
+  font-size: 2.25rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  word-break: break-all;
+  text-align: right;
+  line-height: 1.15;
+}
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+}
+
+.key {
+  appearance: none;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1.35rem;
+  font-weight: 500;
+  padding: 1rem 0.5rem;
+  cursor: pointer;
+  color: var(--text);
+  background: var(--surface-raised);
+  transition: background 0.12s ease, transform 0.08s ease;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.key:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.key-num {
+  background: linear-gradient(180deg, #2c3848 0%, #263140 100%);
+}
+
+.key-num:hover {
+  background: linear-gradient(180deg, #354555 0%, #2d3a4a 100%);
+}
+
+.key-fn {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  background: linear-gradient(180deg, #2a3442 0%, #222b36 100%);
+}
+
+.key-fn:hover {
+  color: var(--text);
+  background: linear-gradient(180deg, #323e4e 0%, #2a3442 100%);
+}
+
+.key-op {
+  background: linear-gradient(180deg, #4a63d4 0%, #3d52b8 100%);
+  color: #fff;
+}
+
+.key-op:hover {
+  background: linear-gradient(180deg, var(--op-hover) 0%, #4a63d4 100%);
+}
+
+.key-eq {
+  background: linear-gradient(180deg, var(--eq) 0%, #c96a52 100%);
+  color: #fff;
+}
+
+.key-eq:hover {
+  background: linear-gradient(180deg, var(--eq-hover) 0%, var(--eq) 100%);
+}
+
+.key-zero {
+  grid-column: span 2;
+}
