@@ -17,9 +17,7 @@
   const pricePack = window.STRIPE_PRICE_PACK_5;
   const priceSub = window.STRIPE_PRICE_SUB_MONTHLY;
   const apiBase = typeof window.STRIPE_API_BASE === "string" ? window.STRIPE_API_BASE : "";
-  // 릴스 촬영 중에는 캐시/로드 순서 때문에 플래그가 안 잡혀도 동작하게 기본값을 true로 둠.
-  // (릴스 끝나면 stripe-config.js 에서 window.REELS_DEMO_CHECKOUT = false 로 확실히 꺼주세요.)
-  const reelsDemoCheckout = window.REELS_DEMO_CHECKOUT !== false;
+  const reelsDemoCheckout = !!window.REELS_DEMO_CHECKOUT;
 
   const reelsLoadingModal = document.getElementById("reels-loading-modal");
   const reelsDoneModal = document.getElementById("reels-done-modal");
