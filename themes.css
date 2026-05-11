@@ -225,17 +225,13 @@ html[data-theme="parents"] {
   --key-shadow: 0 2px 0 rgba(180, 83, 9, 0.2);
 }
 
-/* --- 예수님 (하늘·빛 느낌의 오리지널 팔레트, 상표 이미지 없음) --- */
+/* --- 예수님: 참고 일러스트 배경 + 계산기를 가슴·배 쪽에 배치 (decor/jesus-scene.png) --- */
 html[data-theme="jesus"] {
-  --body-fallback: #e8f4fc;
-  --body-bg:
-    radial-gradient(ellipse 90% 55% at 50% -5%, rgba(250, 204, 21, 0.35) 0%, transparent 52%),
-    radial-gradient(circle at 12% 88%, rgba(59, 130, 246, 0.14) 0%, transparent 38%),
-    radial-gradient(circle at 92% 75%, rgba(147, 197, 253, 0.2) 0%, transparent 32%),
-    linear-gradient(175deg, #f0f9ff 0%, #fefce8 42%, #e0f2fe 100%);
+  --body-fallback: #93c5fd;
+  --body-bg: linear-gradient(180deg, #7dd3fc 0%, #bae6fd 35%, #fef9c3 100%);
   --bg: #e0f2fe;
-  --surface: rgba(255, 255, 255, 0.92);
-  --surface-raised: #f8fafc;
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-raised: rgba(255, 255, 255, 0.95);
   --text: #0c4a6e;
   --text-muted: #0369a1;
   --accent: #0284c7;
@@ -340,12 +336,43 @@ html[data-theme="jesus"] body::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: url("decor/jesus-doodle.svg") center 4% / min(440px, 92vw) no-repeat;
-  opacity: 0.32;
+  background-color: #7dd3fc;
+  background-image: url("decor/jesus-scene.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 22%;
+  opacity: 1;
 }
 
 html[data-theme="jesus"] body::after {
   content: none;
+}
+
+html[data-theme="jesus"] body {
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: clamp(0.25rem, 2vh, 1.25rem);
+}
+
+html[data-theme="jesus"] main.app {
+  margin-top: clamp(5.5rem, 22vh, 11.5rem);
+}
+
+html[data-theme="jesus"] .calculator {
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 8px 32px rgba(12, 74, 110, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+@media (max-width: 520px) {
+  html[data-theme="jesus"] body::before {
+    background-position: center 18%;
+  }
+
+  html[data-theme="jesus"] main.app {
+    margin-top: clamp(4.5rem, 18vh, 9rem);
+  }
 }
 
 html[data-theme="space"] body::before {
