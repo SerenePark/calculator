@@ -70,6 +70,7 @@
   let stored = null;
   let pendingOp = null;
   let freshEntry = true;
+  let reelsPendingResult = null;
 
   function getCredits() {
     const n = parseInt(localStorage.getItem(LS_CREDITS) || "0", 10);
@@ -91,7 +92,7 @@
   }
 
   function canUse() {
-    return reelsDemoCheckout || hasUnlimited() || getCredits() > 0;
+    return hasUnlimited() || getCredits() > 0;
   }
 
   function updateEntitlementStatus() {
@@ -161,7 +162,14 @@
   if (btnReelsDoneOk) {
     btnReelsDoneOk.addEventListener("click", function () {
       closeReelsOverlay(reelsDoneModal);
-      if (reelsResultValue) reelsResultValue.textContent = display ? display.textContent : "0";
+      if (reelsResultValue) {
+        reelsResultValue.textContent =
+          typeof reelsPendingResult === "string" && reelsPendingResult.length
+            ? reelsPendingResult
+            : display
+              ? display.textContent
+              : "0";
+      }
       openReelsOverlay(reelsResultModal);
       if (btnReelsResultClose) btnReelsResultClose.focus();
     });
@@ -264,15 +272,20 @@
     }
 
     if (!canUse()) {
+      if (reelsDemoCheckout) {
+        // 릴스용: 결제 전에도 결과는 미리 계산해두고, 팝업에서 보여주기만 한다.
+        reelsPendingResult = formatted;
+      }
       openPricingModal();
       return;
     }
 
     current = formatted;
+    reelsPendingResult = null;
     stored = null;
     pendingOp = null;
     freshEntry = true;
-    if (!reelsDemoCheckout && !hasUnlimited()) {
+    if (!hasUnlimited()) {
       setCredits(getCredits() - 1);
     }
     updateDisplay();
