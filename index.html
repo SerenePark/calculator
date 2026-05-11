@@ -79,14 +79,23 @@
   <div id="result-modal" class="checkout-modal checkout-modal--hidden" aria-hidden="true" role="dialog" aria-labelledby="result-title">
     <div class="checkout-modal__backdrop result-modal__backdrop" id="result-backdrop" tabindex="-1" aria-hidden="true"></div>
     <div class="result-modal__shell" role="document">
-      <div class="result-modal__sparkles" aria-hidden="true"></div>
+      <div class="result-modal__halo" aria-hidden="true"></div>
+      <div class="result-modal__sparkles result-modal__sparkles--1" aria-hidden="true"></div>
+      <div class="result-modal__sparkles result-modal__sparkles--2" aria-hidden="true"></div>
+      <div class="result-modal__shimmer" aria-hidden="true"></div>
       <div class="checkout-modal__card result-modal__card-inner">
         <p class="result-modal__kicker">
           <span class="result-modal__kicker-emoji" aria-hidden="true">🌈</span>
           <span class="result-modal__kicker-text">결과가 나왔어요</span>
         </p>
         <h2 id="result-title" class="result-modal__title">결과</h2>
-        <div class="result-modal__value" id="result-value" aria-live="polite">0</div>
+        <div class="result-modal__value-wrap">
+          <span class="result-modal__value-ring" aria-hidden="true"></span>
+          <div class="result-modal__value-panel">
+            <div class="result-modal__value" id="result-value" aria-live="polite">0</div>
+            <span class="result-modal__value-glint" aria-hidden="true"></span>
+          </div>
+        </div>
         <button type="button" class="checkout-modal__close result-modal__close" id="btn-result-close">닫기</button>
       </div>
     </div>
