@@ -2,22 +2,24 @@
 
 .theme-dock {
   position: fixed;
-  right: 0.35rem;
+  right: 0;
   top: 50%;
+  left: auto;
   transform: translateY(-50%);
   z-index: 40;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 0.35rem;
-  padding: 0.45rem;
+  padding: 0.5rem 0.45rem 0.5rem 0.55rem;
   border-radius: 14px 0 0 14px;
-  background: rgba(20, 12, 28, 0.45);
+  background: rgba(20, 12, 28, 0.5);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-right: none;
   max-height: 90dvh;
   overflow-y: auto;
+  width: max-content;
 }
 
 .theme-dock__label {
@@ -94,31 +96,32 @@
 @media (max-width: 520px) {
   .theme-dock {
     top: auto;
-    bottom: 0.35rem;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: calc(100vw - 1rem);
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    max-height: none;
+    bottom: 0.5rem;
+    right: 0;
+    left: auto;
+    transform: none;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    max-width: min(5.5rem, 22vw);
+    border-radius: 14px 0 0 14px;
+    border-right: none;
+    max-height: 85dvh;
   }
 
   .theme-dock__label {
-    width: 100%;
-    flex-basis: 100%;
+    width: auto;
+    flex-basis: auto;
   }
 
   .theme-chip {
-    width: auto;
-    min-width: 4.5rem;
-    min-height: 2.85rem;
-    flex-direction: row;
-    gap: 0.35rem;
-    padding: 0.4rem 0.5rem;
+    width: 100%;
+    min-width: 0;
+    min-height: 2.75rem;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.35rem 0.25rem;
+    font-size: 0.52rem;
   }
 }
 
@@ -270,10 +273,11 @@ html[data-theme="jesus"] {
   --key-shadow: 0 2px 0 rgba(12, 74, 110, 0.15);
 }
 
-/* 배경 그림은 전부 오리지널 SVG (외부 캐릭터·명화 복제 아님) */
-html[data-theme="pink-cat"] body > *,
-html[data-theme="parents"] body > *,
-html[data-theme="jesus"] body > * {
+/* 배경 그림은 전부 오리지널 SVG. .theme-dock 은 제외 — position:fixed 유지 (뷰포트 오른쪽 끝) */
+html[data-theme="pink-cat"] body > *:not(.theme-dock),
+html[data-theme="parents"] body > *:not(.theme-dock),
+html[data-theme="jesus"] body > *:not(.theme-dock),
+html[data-theme="space"] body > *:not(.theme-dock) {
   position: relative;
   z-index: 1;
 }
@@ -287,7 +291,7 @@ html[data-theme="pink-cat"] body::before {
   opacity: 0.68;
   background-image: url("decor/pink-cats-tile.svg");
   background-repeat: repeat;
-  background-size: 120px 120px;
+  background-size: 280px 280px;
   background-position: center;
 }
 
@@ -335,9 +339,21 @@ html[data-theme="jesus"] body::after {
   content: none;
 }
 
-html[data-theme="space"] body::before,
+html[data-theme="space"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  background-image: url("decor/space-planets-tile.svg");
+  background-repeat: repeat;
+  background-size: 320px 320px;
+  background-position: center;
+}
+
 html[data-theme="space"] body::after {
-  content: none !important;
+  content: none;
 }
 
 @media (max-width: 520px) {
