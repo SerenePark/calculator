@@ -13,6 +13,9 @@
   const btnBuyPack = document.getElementById("btn-buy-pack");
   const btnBuySub = document.getElementById("btn-buy-sub");
   const btnPricingClose = document.getElementById("btn-pricing-close");
+  const preCheckoutAd = document.getElementById("pre-checkout-ad");
+  const preCheckoutAdImg = document.getElementById("pre-checkout-ad-img");
+  const preCheckoutAdClose = document.getElementById("pre-checkout-ad-close");
   const resultModal = document.getElementById("result-modal");
   const resultBackdrop = document.getElementById("result-backdrop");
   const btnResultClose = document.getElementById("btn-result-close");
@@ -21,6 +24,11 @@
   const pricePack = window.STRIPE_PRICE_PACK_5;
   const priceSub = window.STRIPE_PRICE_SUB_MONTHLY;
   const apiBase = typeof window.STRIPE_API_BASE === "string" ? window.STRIPE_API_BASE : "";
+  const AD_IMG_KO = "assets/ad-jumping-cat-ko.png";
+  const AD_IMG_EN = "assets/ad-jumping-cat-en.png";
+
+  let preCheckoutAdTimer = null;
+  let preCheckoutPending = null;
 
   const themeDock = document.querySelector(".theme-dock");
 
@@ -105,6 +113,74 @@
     } else {
       entStatus.textContent = CalcI18n.t("entCredits", { n: getCredits() });
     }
+  }
+
+  function isPreCheckoutAdOpen() {
+    return !!preCheckoutAd && !preCheckoutAd.classList.contains("pre-checkout-ad--hidden");
+  }
+
+  function isPreCheckoutAdCloseReady() {
+    return (
+      !!preCheckoutAdClose &&
+      !preCheckoutAdClose.classList.contains("pre-checkout-ad__close--hidden") &&
+      !preCheckoutAdClose.disabled
+    );
+  }
+
+  function clearPreCheckoutAdTimer() {
+    if (preCheckoutAdTimer != null) {
+      clearTimeout(preCheckoutAdTimer);
+      preCheckoutAdTimer = null;
+    }
+  }
+
+  function dismissPreCheckoutAdAndStartCheckout() {
+    var p = preCheckoutPending;
+    clearPreCheckoutAdTimer();
+    preCheckoutPending = null;
+    if (preCheckoutAd) {
+      preCheckoutAd.classList.add("pre-checkout-ad--hidden");
+      preCheckoutAd.setAttribute("aria-hidden", "true");
+    }
+    if (preCheckoutAdClose) {
+      preCheckoutAdClose.classList.add("pre-checkout-ad__close--hidden");
+      preCheckoutAdClose.disabled = true;
+    }
+    if (p) startCheckout(p.priceId, p.mode);
+  }
+
+  function showPreCheckoutAdThenCheckout(priceId, mode) {
+    if (!priceId) {
+      alert(CalcI18n.t("alertNoPriceId"));
+      return;
+    }
+    if (!preCheckoutAd || !preCheckoutAdImg) {
+      startCheckout(priceId, mode);
+      return;
+    }
+    if (isPreCheckoutAdOpen()) return;
+
+    preCheckoutPending = { priceId: priceId, mode: mode };
+    var lang = CalcI18n.getLang();
+    preCheckoutAdImg.src = lang === "en" ? AD_IMG_EN : AD_IMG_KO;
+    preCheckoutAdImg.alt = CalcI18n.t("adImgAlt");
+    CalcI18n.apply(preCheckoutAd);
+
+    preCheckoutAd.classList.remove("pre-checkout-ad--hidden");
+    preCheckoutAd.setAttribute("aria-hidden", "false");
+    if (preCheckoutAdClose) {
+      preCheckoutAdClose.classList.add("pre-checkout-ad__close--hidden");
+      preCheckoutAdClose.disabled = true;
+    }
+
+    clearPreCheckoutAdTimer();
+    preCheckoutAdTimer = setTimeout(function () {
+      preCheckoutAdTimer = null;
+      if (!preCheckoutAdClose) return;
+      preCheckoutAdClose.classList.remove("pre-checkout-ad__close--hidden");
+      preCheckoutAdClose.disabled = false;
+      preCheckoutAdClose.focus();
+    }, 1000);
   }
 
   function isPricingOpen() {
@@ -312,12 +388,19 @@
   }
 
   btnBuyPack.addEventListener("click", function () {
-    startCheckout(pricePack, "payment");
+    showPreCheckoutAdThenCheckout(pricePack, "payment");
   });
 
   btnBuySub.addEventListener("click", function () {
-    startCheckout(priceSub, "subscription");
+    showPreCheckoutAdThenCheckout(priceSub, "subscription");
   });
+
+  if (preCheckoutAdClose) {
+    preCheckoutAdClose.addEventListener("click", function () {
+      if (!isPreCheckoutAdCloseReady()) return;
+      dismissPreCheckoutAdAndStartCheckout();
+    });
+  }
 
   btnPricingClose.addEventListener("click", closePricingModal);
   pricingBackdrop.addEventListener("click", closePricingModal);
@@ -376,6 +459,15 @@
   });
 
   document.addEventListener("keydown", function (e) {
+    if (isPreCheckoutAdOpen()) {
+      if (isPreCheckoutAdCloseReady() && e.key === "Escape") {
+        e.preventDefault();
+        dismissPreCheckoutAdAndStartCheckout();
+        return;
+      }
+      return;
+    }
+
     if (isPricingOpen()) {
       if (e.key === "Escape") {
         e.preventDefault();
