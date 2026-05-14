@@ -24,8 +24,27 @@
   const pricePack = window.STRIPE_PRICE_PACK_5;
   const priceSub = window.STRIPE_PRICE_SUB_MONTHLY;
   const apiBase = typeof window.STRIPE_API_BASE === "string" ? window.STRIPE_API_BASE : "";
-  const AD_IMG_KO = "assets/ad-jumping-cat-ko.png";
-  const AD_IMG_EN = "assets/ad-jumping-cat-en.png";
+
+  function resolveAssetUrl(relPath) {
+    var cur = typeof document !== "undefined" && document.currentScript && document.currentScript.src;
+    if (!cur) {
+      var el = document.querySelector('script[src*="script.js"]');
+      cur = el && el.src;
+    }
+    if (cur) {
+      try {
+        return new URL(relPath, cur).href;
+      } catch (ignore) {}
+    }
+    try {
+      return new URL(relPath, window.location.href).href;
+    } catch (e2) {
+      return relPath;
+    }
+  }
+
+  const AD_IMG_KO = resolveAssetUrl("assets/ad-jumping-cat-ko.png");
+  const AD_IMG_EN = resolveAssetUrl("assets/ad-jumping-cat-en.png");
 
   let preCheckoutAdTimer = null;
   let preCheckoutPending = null;
@@ -163,7 +182,6 @@
     preCheckoutPending = { priceId: priceId, mode: mode };
     var lang = CalcI18n.getLang();
     preCheckoutAdImg.src = lang === "en" ? AD_IMG_EN : AD_IMG_KO;
-    preCheckoutAdImg.alt = CalcI18n.t("adImgAlt");
     CalcI18n.apply(preCheckoutAd);
 
     preCheckoutAd.classList.remove("pre-checkout-ad--hidden");
